@@ -17,6 +17,7 @@ task wrapper(type: Wrapper) {
 
 //mainClassName = "boofcvexamples.ExampleInterestPoint"
 //mainClassName = "boofcvexamples.ExampleTemplateMatching"
-mainClassName = "boofcvexamples.ExampleFeatureSurf"
+//mainClassName = "boofcvexamples.ExampleFeatureSurf"
+mainClassName = "boofcvexamples.ExampleImageStitching"
 
 
