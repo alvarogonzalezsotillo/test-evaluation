@@ -255,6 +255,7 @@ public class ExampleImageStitching {
       { "borders-a.jpg", "borders-d.jpg" },
       { "borders-a.jpg", "borders-e.jpg" },
       { "borders-a.jpg", "borders-f.jpg" },
+      { "borders-a.jpg", "borders-g.jpg" },      
 		};
 		
 		for( String[] ims : images ){
