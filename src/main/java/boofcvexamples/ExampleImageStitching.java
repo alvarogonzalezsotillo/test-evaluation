@@ -248,26 +248,17 @@ public class ExampleImageStitching {
 	public static void main( String args[] ) {
 		BufferedImage imageA,imageB;
 		
-		String[][] images = {
-      { "mountain_rotate_01.jpg", "mountain_rotate_03.jpg" },
-      { "borders-a.jpg", "borders-b.jpg" },
-      { "borders-a.jpg", "borders-c.jpg" },
-      { "borders-a.jpg", "borders-d.jpg" },
-      { "borders-a.jpg", "borders-e.jpg" },
-      { "borders-a.jpg", "borders-f.jpg" },
-      { "borders-a.jpg", "borders-g.jpg" },      
-      { "borders-a.jpg", "borders-h.jpg" },      
-      { "borders-a.jpg", "borders-i.jpg" },      
-		};
 		
-		for( String[] ims : images ){
-      imageA = UtilImageIO.loadImage("./src/testimages/stitch/" + ims[0]);
-      imageB = UtilImageIO.loadImage("./src/testimages/stitch/" + ims[1]);
+    imageA = UtilImageIO.loadImage("./src/testimages/stitch/borders-00.jpg");
+		for( int i = 1 ; i <= 10 ; i++  ){
+      String suffix = String.format("%02d",i);
+      String filename= "./src/testimages/stitch/borders-" + suffix+ ".jpg";
+      imageB = UtilImageIO.loadImage(filename);
       try{
-        stitch(imageA,imageB, ImageFloat32.class, ims[0] + "-" + ims[1]);
+        stitch(imageA,imageB, ImageFloat32.class, filename);
       }
       catch( Exception e ){
-        System.out.println( ims[0] );
+        System.out.println( filename );
         e.printStackTrace(System.out);
       }
     }
