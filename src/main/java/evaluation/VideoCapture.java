@@ -1,4 +1,4 @@
-package sarxosexamples;
+package evaluation;
 
 import com.github.sarxos.webcam.Webcam;
 
@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,12 +31,17 @@ public class VideoCapture implements Closeable{
         return ret;
     }
 
+    private static int _seq = 0;
+
     private class VideoCaptureThread extends Thread{
         private final ImageCapturedListener _listener;
         private boolean _stopASAP;
 
         public VideoCaptureThread( ImageCapturedListener listener ){
             _listener = listener;
+            setName( "VideoCaptureThread" + _seq );
+            setPriority(Thread.MIN_PRIORITY);
+            _seq++;
         }
 
         public void stopASAP(){
