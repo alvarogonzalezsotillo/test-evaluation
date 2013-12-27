@@ -20,7 +20,7 @@ object StitchImageAndPanelSample extends App{
   val sia = new StitchImageActor(pattern,ia)
   val panel = new ImagePanel(sia)
 
-  val frame = new JFrame("Capture image and panel sample")
+  val frame = new JFrame("Stitch image sample")
   frame add panel
 
   frame.setSize(200,200)
