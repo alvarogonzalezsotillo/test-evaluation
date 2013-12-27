@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
@@ -22,7 +23,7 @@ public class VideoCapture implements Closeable{
     private Webcam _webcam;
 
     public interface ImageCapturedListener {
-        void imageCaptured(Image i);
+        void imageCaptured(BufferedImage i);
     }
 
     public  VideoCaptureThread startVideoCapture(ImageCapturedListener l){
@@ -52,7 +53,7 @@ public class VideoCapture implements Closeable{
         @Override
         public void run() {
             while( !_stopASAP ){
-                Image i = captureImage();
+                BufferedImage i = captureImage();
                 _listener.imageCaptured(i);
             }
             log( "end of run");
@@ -72,7 +73,7 @@ public class VideoCapture implements Closeable{
         return _webcam;
     }
 
-    public Image captureImage(){
+    public BufferedImage captureImage(){
         return webcam().getImage();
     }
 
@@ -90,7 +91,7 @@ public class VideoCapture implements Closeable{
         final VideoCapture nvc = new VideoCapture();
         ImageCapturedListener listener = new ImageCapturedListener(){
             @Override
-            public void imageCaptured(final Image i) {
+            public void imageCaptured(final BufferedImage i) {
                 try {
                     SwingUtilities.invokeAndWait(new Runnable() {
                         @Override

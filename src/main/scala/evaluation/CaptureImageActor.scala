@@ -4,7 +4,7 @@ import scala.actors.Actor
 import java.awt.Image
 import com.github.sarxos.webcam.Webcam
 import evaluation.VideoCapture.ImageCapturedListener
-import evaluation.ImageMessages.{LastImage, GetLastImage}
+import evaluation.ImageMessages.{Img, LastImage, GetLastImage}
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +15,7 @@ import evaluation.ImageMessages.{LastImage, GetLastImage}
  */
 class CaptureImageActor extends Actor {
 
-  case class ImageCaptured(image: Image)
+  case class ImageCaptured(image: Img)
 
   case class Stop(requester: Actor)
 
@@ -23,14 +23,14 @@ class CaptureImageActor extends Actor {
 
   private var _stopASAP = false
 
-  private var _lastImage: Image = null
+  private var _lastImage: Img = null
 
   val _minMillisBetweenFrames = 200
   val self = this
 
   private val vc = new VideoCapture()
   private val vct = vc.startVideoCapture(new ImageCapturedListener {
-    def imageCaptured(i: Image) {
+    def imageCaptured(i: Img) {
       //Log( "Image captured" )
       self ! ImageCaptured(i)
       Thread.sleep(_minMillisBetweenFrames)

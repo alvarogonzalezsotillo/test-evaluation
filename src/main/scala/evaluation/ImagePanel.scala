@@ -4,7 +4,7 @@ import javax.swing.{SwingUtilities, JPanel}
 import java.awt.Image
 import java.awt.Graphics
 import scala.actors.Actor
-import evaluation.ImageMessages.{LastImage, GetLastImage}
+import evaluation.ImageMessages.{Img, LastImage, GetLastImage}
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +15,7 @@ import evaluation.ImageMessages.{LastImage, GetLastImage}
  */
 class ImagePanel(imageActor: Actor) extends JPanel {
 
-  private var _lastImage: Image = null
+  private var _lastImage: Img = null
 
   private var actor = new Actor {
     val self = this

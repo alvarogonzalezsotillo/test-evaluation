@@ -2,6 +2,7 @@ package evaluation
 
 import scala.actors.Actor
 import java.awt.Image
+import java.awt.image.BufferedImage
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,7 +11,12 @@ import java.awt.Image
  * Time: 22:32
  * To change this template use File | Settings | File Templates.
  */
-object ImageMessages{
-  case class GetLastImage( requester: Actor )
-  case class LastImage( image: Image )
+object ImageMessages {
+
+  type Img = BufferedImage
+
+  case class GetLastImage(requester: Actor)
+
+  case class LastImage(image: Img)
+
 }
