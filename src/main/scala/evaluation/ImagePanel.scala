@@ -22,7 +22,7 @@ class ImagePanel(imageActor: Actor) extends JPanel {
 
     def postUpdate() = SwingUtilities.invokeLater(new Runnable {
       def run() = {
-        Log("Repintando")
+        Log("Repintando " + System.currentTimeMillis )
         repaint()
       }
     })

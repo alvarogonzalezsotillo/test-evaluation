@@ -18,7 +18,6 @@ class FixedImageActor(image: Img) extends Actor {
       receive {
         case GetLastImage(requester) =>
           requester ! LastImage(image)
-
       }
     }
   }

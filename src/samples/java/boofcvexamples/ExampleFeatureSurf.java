@@ -40,26 +40,15 @@ import java.awt.*;
 import java.io.*;
 import java.awt.image.*;
 import georegression.struct.point.*;
-import georegression.struct.*;
-import georegression.*;
 import boofcv.core.image.*;
-import boofcv.core.*;
 import boofcv.gui.feature.*;
-import boofcv.struct.image.*;
 import boofcv.abst.feature.detect.interest.*;
-import boofcv.factory.feature.detect.interest.*;
 import boofcv.struct.*;
 import boofcv.gui.image.*;
-import boofcv.io.image.*;
 
 
 import java.util.ArrayList;
 import java.util.List;
-
-import java.awt.image.*;
-import java.awt.*;
-
-import java.io.*;
 
 /**
 * Example of how to use SURF detector and descriptors in BoofCV.

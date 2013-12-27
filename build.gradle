@@ -20,10 +20,10 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.6'
 }
 
-//mainClassName = "boofcvexamples.ExampleInterestPoint"
-//mainClassName = "boofcvexamples.ExampleTemplateMatching"
-//mainClassName = "boofcvexamples.ExampleFeatureSurf"
-//mainClassName = "boofcvexamples.ExampleImageStitching"
-mainClassName = "sarxosexamples.GetBitmapFromCamera"
+//mainClassName = "ExampleInterestPoint"
+//mainClassName = "ExampleTemplateMatching"
+//mainClassName = "ExampleFeatureSurf"
+//mainClassName = "ExampleImageStitching"
+mainClassName = "GetBitmapFromCamera"
 
 
