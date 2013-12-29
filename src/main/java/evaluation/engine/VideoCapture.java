@@ -1,4 +1,4 @@
-package evaluation;
+package evaluation.engine;
 
 import com.github.sarxos.webcam.Webcam;
 
@@ -9,7 +9,6 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.

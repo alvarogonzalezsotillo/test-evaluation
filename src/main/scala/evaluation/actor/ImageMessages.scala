@@ -1,4 +1,4 @@
-package evaluation
+package evaluation.actor
 
 import scala.actors.Actor
 import java.awt.Image
@@ -14,9 +14,11 @@ import java.awt.image.BufferedImage
 object ImageMessages {
 
   type Img = BufferedImage
+  type Time = Long
+  val noTime : Time = -1
 
-  case class GetLastImage(requester: Actor)
+  case class GetImage(requester: Actor, lastTime: Time )
 
-  case class LastImage(image: Img)
+  case class LastImage(image: Img, time: Time)
 
 }

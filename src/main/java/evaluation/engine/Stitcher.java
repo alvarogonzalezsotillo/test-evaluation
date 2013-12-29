@@ -1,4 +1,4 @@
-package evaluation;
+package evaluation.engine;
 
 import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociation;
@@ -14,7 +14,6 @@ import boofcv.alg.sfm.robust.GenerateHomographyLinear;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
-import boofcv.gui.image.ShowImages;
 import boofcv.struct.FastQueue;
 import boofcv.struct.feature.AssociatedIndex;
 import boofcv.struct.feature.SurfFeature;
@@ -73,7 +72,7 @@ public class Stitcher {
      * Using abstracted code, find a transform which minimizes the difference between corresponding features
      * in both images.  This code is completely model independent and is the core algorithms.
      */
-    public static <T extends ImageSingleBand, FD extends TupleDesc> Homography2D_F64
+    private static <T extends ImageSingleBand, FD extends TupleDesc> Homography2D_F64
     computeTransform(T imageA, T imageB,
                      DetectDescribePoint<T, FD> detDesc,
                      AssociateDescription<FD> associate,
@@ -115,7 +114,6 @@ public class Stitcher {
     }
 
     /**
-     * Given two input images create and display an image where the two have been overlayed on top of each other.
      */
     public static <T extends ImageSingleBand>
     Homography2D_F64 stitchHomography(BufferedImage imageA, BufferedImage imageB, Class<T> imageType) {
@@ -146,7 +144,7 @@ public class Stitcher {
      * Renders and displays the stitched together images
      */
     public static BufferedImage renderStitching(BufferedImage imageA, BufferedImage imageB,
-                                                Homography2D_F64 fromAtoB) {
+                                                 Homography2D_F64 fromAtoB) {
         // specify size of output image
         double scale = 0.5;
         int outputWidth = imageA.getWidth();

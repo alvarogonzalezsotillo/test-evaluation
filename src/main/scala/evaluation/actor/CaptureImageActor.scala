@@ -1,10 +1,12 @@
-package evaluation
+package evaluation.actor
 
 import scala.actors.Actor
 import java.awt.Image
 import com.github.sarxos.webcam.Webcam
-import evaluation.VideoCapture.ImageCapturedListener
-import evaluation.ImageMessages.{Img, LastImage, GetLastImage}
+import evaluation.engine.VideoCapture
+import VideoCapture.ImageCapturedListener
+import evaluation.{Log}
+import evaluation.actor.ImageMessages.{Time, GetImage, LastImage, Img}
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +17,7 @@ import evaluation.ImageMessages.{Img, LastImage, GetLastImage}
  */
 class CaptureImageActor extends Actor {
 
-  case class ImageCaptured(image: Img)
+  case class ImageCaptured(image: Img, time: Time)
 
   case class Stop(requester: Actor)
 
@@ -23,7 +25,7 @@ class CaptureImageActor extends Actor {
 
   private var _stopASAP = false
 
-  private var _lastImage: Img = null
+  private var _lastImage: LastImage = null
 
   val _minMillisBetweenFrames = 200
   val self = this
@@ -32,36 +34,32 @@ class CaptureImageActor extends Actor {
   private val vct = vc.startVideoCapture(new ImageCapturedListener {
     def imageCaptured(i: Img) {
       //Log( "Image captured" )
-      self ! ImageCaptured(i)
+      self ! ImageCaptured(i, System.currentTimeMillis )
       Thread.sleep(_minMillisBetweenFrames)
     }
   })
 
-  private var _lastImageChanged = false
-  private var _pendingRequests = List[Actor]()
+  private var _pendingRequests = List[GetImage]()
 
   def act() {
     Log(s"Starting CaptureImageActor")
 
     loop {
       receive {
-        case GetLastImage(requester) =>
+        case GetImage(requester,lastTime) =>
           //Log(s"Sending last image to $requester")
-          if (_lastImageChanged) {
-            requester ! LastImage(_lastImage)
-            _lastImageChanged = false
+          if (lastTime < _lastImage.time ) {
+            requester ! _lastImage
           }
           else {
-            _pendingRequests = requester :: _pendingRequests
-
+            _pendingRequests = GetImage(requester,lastTime) :: _pendingRequests
           }
 
-        case ImageCaptured(image) =>
+        case ImageCaptured(image, time) =>
           //Log( "Image captured -> to _lastImage" )
-          _lastImageChanged = true
-          _lastImage = image
-          _pendingRequests.foreach(_ ! LastImage(_lastImage))
-          _pendingRequests = Nil
+          _lastImage = LastImage(image, time )
+          _pendingRequests.filter(_.lastTime < time).foreach( _.requester ! _lastImage )
+          _pendingRequests = _pendingRequests.filter(_.lastTime >= time)
 
         case Stop(requester) =>
           vct.stopASAP()

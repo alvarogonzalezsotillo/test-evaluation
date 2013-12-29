@@ -1,7 +1,8 @@
 package samples
 
 import javax.swing.JFrame
-import evaluation.{ImagePanel, CaptureImageActor}
+import evaluation.actor.{CaptureImageActor}
+import evaluation.gui.ImagePanel
 
 /**
  * Created with IntelliJ IDEA.

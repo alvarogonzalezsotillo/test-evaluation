@@ -1,4 +1,4 @@
-package evaluation
+package evaluation.actor
 
 import scala.actors.Actor
 

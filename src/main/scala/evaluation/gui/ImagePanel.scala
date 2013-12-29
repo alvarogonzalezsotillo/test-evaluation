@@ -1,10 +1,12 @@
-package evaluation
+package evaluation.gui
 
 import javax.swing.{SwingUtilities, JPanel}
 import java.awt.Image
 import java.awt.Graphics
 import scala.actors.Actor
-import evaluation.ImageMessages.{Img, LastImage, GetLastImage}
+import evaluation.Log
+import evaluation.actor.ImageMessages.{GetImage, LastImage, Img}
+import evaluation.actor.ImageMessages
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +17,7 @@ import evaluation.ImageMessages.{Img, LastImage, GetLastImage}
  */
 class ImagePanel(imageActor: Actor) extends JPanel {
 
-  private var _lastImage: Img = null
+  private var _lastImage: LastImage = null
 
   private var actor = new Actor {
     val self = this
@@ -30,16 +32,16 @@ class ImagePanel(imageActor: Actor) extends JPanel {
 
     def act {
       Log("Starting actor of ImagePanel")
-      imageActor ! GetLastImage(self)
+      imageActor ! GetImage(self, ImageMessages.noTime)
 
       Log("Sent initial GetlastImage")
 
       loop {
         receive {
-          case LastImage(image) =>
-            _lastImage = image
+          case li : LastImage =>
+            _lastImage = li
             postUpdate()
-            imageActor ! GetLastImage(self)
+            imageActor ! GetImage(self, _lastImage.time)
 
           case anything =>
             Log( s"Unexpected: $anything" )
@@ -53,7 +55,7 @@ class ImagePanel(imageActor: Actor) extends JPanel {
   override def paint(g: Graphics) {
     if (_lastImage != null) {
       val size = getSize()
-      g.drawImage(_lastImage, 0, 0, size.width, size.height, null)
+      g.drawImage(_lastImage.image, 0, 0, size.width, size.height, null)
     }
   }
 }

@@ -1,9 +1,10 @@
 package samples
 
-import evaluation.{FixedImageActor, StitchImageActor, ImagePanel, CaptureImageActor}
 import javax.swing.JFrame
 import javax.imageio.ImageIO
 import java.io.File
+import evaluation.actor.{StitchImageActor, FixedImageActor}
+import evaluation.gui.ImagePanel
 
 /**
  * Created with IntelliJ IDEA.
