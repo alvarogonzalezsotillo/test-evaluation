@@ -27,7 +27,7 @@ class CaptureImageActor extends Actor {
 
   private var _lastImage: LastImage = null
 
-  val _minMillisBetweenFrames = 200
+  val _minMillisBetweenFrames = 0
   val self = this
 
   private val vc = new VideoCapture()
@@ -48,7 +48,7 @@ class CaptureImageActor extends Actor {
       receive {
         case GetImage(requester,lastTime) =>
           //Log(s"Sending last image to $requester")
-          if (lastTime < _lastImage.time ) {
+          if (_lastImage != null && lastTime < _lastImage.time ) {
             requester ! _lastImage
           }
           else {
