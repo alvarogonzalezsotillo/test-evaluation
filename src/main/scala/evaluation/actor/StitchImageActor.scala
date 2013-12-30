@@ -12,6 +12,8 @@ import evaluation.Log
  * Time: 23:58
  * To change this template use File | Settings | File Templates.
  */
+
+
 class StitchImageActor( pattern : Img, imageActor: Actor ) extends Actor{
 
   val stitcher = new Stitcher(pattern)

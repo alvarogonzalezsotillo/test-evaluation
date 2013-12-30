@@ -1,10 +1,10 @@
 package evaluation.gui
 
 import javax.swing.JPanel
-import java.awt.Image
-import java.awt.Graphics
+import java.awt.{RenderingHints, Graphics2D, Graphics}
 import scala.actors.Actor
 import evaluation.actor.ImagePanelActor
+import evaluation.actor.ImageMessages.Img
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,19 +19,26 @@ object ImagePanel {
     val ipa = new ImagePanelActor(imageActor, ip)
     ip
   }
+
+  def apply(image: Img) = {
+    val ip = new ImagePanel
+    ip.image_=(image)
+    ip
+  }
+
+
 }
 
 class ImagePanel() extends JPanel {
 
   private var kk = 3
 
-  private var _image: Image = null
+  private var _image: Img = null
 
-  def image_=(i: Image) {
+  def image_=(i: Img) {
     _image = i
     repaint()
   }
-
 
 
   def image() = _image
@@ -39,6 +46,7 @@ class ImagePanel() extends JPanel {
   override def paint(g: Graphics) {
     if (image != null) {
       val size = getSize()
+      g.asInstanceOf[Graphics2D].setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
       g.drawImage(image, 0, 0, size.width, size.height, null)
     }
     else {

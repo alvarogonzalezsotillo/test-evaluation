@@ -1,28 +1,29 @@
 package samples
 
-import javax.imageio.ImageIO
-import java.io.File
-import evaluation.actor.{StitchImageActor, FixedImageActor}
+import evaluation.engine.{TestLayoutToImg, TestLayout}
+import evaluation.actor.{CaptureImageActor, StitchImageActor, FixedImageActor}
 import evaluation.gui.{StitchProgressPane, ImagePanel}
 import javax.swing.JFrame
-import evaluation.engine.{TestLayoutToImg, TestLayout}
+import javax.imageio.ImageIO
+import java.io.File
 
 /**
  * Created with IntelliJ IDEA.
  * User: alvaro
  * Date: 30/12/13
- * Time: 0:26
+ * Time: 10:13
  * To change this template use File | Settings | File Templates.
  */
-object TestLayoutSample extends App {
+object ContinuousStitchLayoutSample extends App{
+
 
   val layout = TestLayout(135,4)
 
 
   val pattern = TestLayoutToImg(layout)
-  val ia = new FixedImageActor( ImageIO.read( new File( "./src/testimages/layout/msword-135.jpg")))
+  val ia = new CaptureImageActor
 
-  val frame = new JFrame("Test Layout sample")
+  val frame = new JFrame("Test continuous Layout sample")
   frame add new StitchProgressPane(pattern,ia)
 
   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)

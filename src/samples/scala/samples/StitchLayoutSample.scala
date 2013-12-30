@@ -19,11 +19,11 @@ object StitchLayoutSample extends App{
   val layout = TestLayout(135,4)
 
 
-  val image = TestLayoutToImg(layout)
+  val pattern = TestLayoutToImg(layout)
 
 
+  val image = ImageIO.read( new File("./src/testimages/layout/msword-135.jpg"))
   val ia = new FixedImageActor(image)
-  val pattern = ImageIO.read( new File("./src/testimages/layout/msword-135.jpg"))
   val sia = new StitchImageActor(pattern,ia)
   val panel = ImagePanel(sia)
 
