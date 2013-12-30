@@ -28,9 +28,9 @@ class StitchProgressPane(pattern: Img, imageActor: Actor) extends JPanel {
   add(stitchedPanel, BorderLayout.CENTER)
 
   private val leftPanel = new JPanel
-  add(leftPanel, BorderLayout.WEST)
+  add(leftPanel, BorderLayout.NORTH)
 
-  leftPanel.setLayout(new GridLayout(2, 1))
+  leftPanel.setLayout(new GridLayout(1, 2))
   leftPanel.add(patternPanel)
   leftPanel.add(imagePanel)
   leftPanel.setPreferredSize( new Dimension(200,200) )

@@ -20,7 +20,11 @@ object ContinuousStitchLayoutSample extends App{
   val layout = TestLayout(135,4)
 
 
-  val pattern = TestLayoutToImg(layout)
+
+  //val pattern = TestLayoutToImg(layout)
+  val pattern = ImageIO.read( new File("./src/testimages/stitch/borders-00.jpg"))
+
+
   val ia = new CaptureImageActor
 
   val frame = new JFrame("Test continuous Layout sample")

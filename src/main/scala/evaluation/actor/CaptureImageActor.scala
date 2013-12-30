@@ -27,7 +27,7 @@ class CaptureImageActor extends Actor {
 
   private var _lastImage: LastImage = null
 
-  val _minMillisBetweenFrames = 0
+  val _minMillisBetweenFrames = 50
   val self = this
 
   private val vc = new VideoCapture()
