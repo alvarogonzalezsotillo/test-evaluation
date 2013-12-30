@@ -20,7 +20,7 @@ class ImagePanelActor(imageActor: Actor, imagePanel: ImagePanel) extends Actor {
 
   def postUpdate() = SwingUtilities.invokeLater(new Runnable {
     def run() = {
-      imagePanel.image_=( _lastImage.image )
+      imagePanel.image = _lastImage.image
     }
   })
 

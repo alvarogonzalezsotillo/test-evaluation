@@ -22,7 +22,7 @@ object ImagePanel {
 
   def apply(image: Img) = {
     val ip = new ImagePanel
-    ip.image_=(image)
+    ip.image = image
     ip
   }
 
@@ -31,17 +31,17 @@ object ImagePanel {
 
 class ImagePanel() extends JPanel {
 
-  private var kk = 3
 
   private var _image: Img = null
 
-  def image_=(i: Img) {
-    _image = i
+  def image: Img = _image
+  def image_=(n: Img) {
+    _image = n
     repaint()
   }
 
 
-  def image() = _image
+  def img() = _image
 
   override def paint(g: Graphics) {
     if (image != null) {
