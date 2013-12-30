@@ -124,7 +124,8 @@ public class Stitcher {
 
         // Detect using the standard SURF feature descriptor and describer
         ConfigFastHessian originalConfig = new ConfigFastHessian(1, 2, 200, 1, 9, 4, 4);
-        DetectDescribePoint detDesc = FactoryDetectDescribe.surfStable(originalConfig, null, null, imageType);
+        ConfigFastHessian config = new ConfigFastHessian(1, 2, 400, 1, 9, 4, 4);
+        DetectDescribePoint detDesc = FactoryDetectDescribe.surfStable(config, null, null, imageType);
         ScoreAssociation<SurfFeature> scorer = FactoryAssociation.scoreEuclidean(SurfFeature.class, true);
         AssociateDescription<SurfFeature> associate = FactoryAssociation.greedy(scorer, 2, true);
 

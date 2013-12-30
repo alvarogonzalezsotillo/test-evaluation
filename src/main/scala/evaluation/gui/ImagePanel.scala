@@ -1,12 +1,10 @@
 package evaluation.gui
 
-import javax.swing.{SwingUtilities, JPanel}
+import javax.swing.JPanel
 import java.awt.Image
 import java.awt.Graphics
 import scala.actors.Actor
-import evaluation.Log
-import evaluation.actor.ImageMessages.{GetImage, LastImage, Img}
-import evaluation.actor.ImageMessages
+import evaluation.actor.ImagePanelActor
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,47 +13,36 @@ import evaluation.actor.ImageMessages
  * Time: 22:28
  * To change this template use File | Settings | File Templates.
  */
-class ImagePanel(imageActor: Actor) extends JPanel {
+object ImagePanel {
+  def apply(imageActor: Actor) = {
+    val ip = new ImagePanel
+    val ipa = new ImagePanelActor(imageActor, ip)
+    ip
+  }
+}
 
-  private var _lastImage: LastImage = null
+class ImagePanel() extends JPanel {
 
-  private var actor = new Actor {
-    val self = this
+  private var kk = 3
 
-    def postUpdate() = SwingUtilities.invokeLater(new Runnable {
-      def run() = {
-        Log("Repintando " + System.currentTimeMillis )
-        repaint()
-      }
-    })
+  private var _image: Image = null
 
-
-    def act {
-      Log("Starting actor of ImagePanel")
-      imageActor ! GetImage(self, ImageMessages.noTime)
-
-      Log("Sent initial GetlastImage")
-
-      loop {
-        receive {
-          case li : LastImage =>
-            _lastImage = li
-            postUpdate()
-            imageActor ! GetImage(self, _lastImage.time)
-
-          case anything =>
-            Log( s"Unexpected: $anything" )
-        }
-      }
-    }
-
-    start()
+  def image_=(i: Image) {
+    _image = i
+    repaint()
   }
 
+
+
+  def image() = _image
+
   override def paint(g: Graphics) {
-    if (_lastImage != null) {
+    if (image != null) {
       val size = getSize()
-      g.drawImage(_lastImage.image, 0, 0, size.width, size.height, null)
+      g.drawImage(image, 0, 0, size.width, size.height, null)
+    }
+    else {
+      super.paint(g)
     }
   }
 }

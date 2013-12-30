@@ -14,10 +14,11 @@ import evaluation.gui.ImagePanel
 object CaptureImageAndPanelSample extends App{
 
   val cia = new CaptureImageActor
-  val panel = new ImagePanel(cia)
+  val panel = ImagePanel(cia)
 
   val frame = new JFrame("Capture image and panel sample")
   frame add panel
+  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 
   frame.setSize(200,200)
   frame.setVisible(true)

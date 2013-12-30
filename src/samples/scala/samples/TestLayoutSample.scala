@@ -1,31 +1,34 @@
 package samples
 
-import javax.swing.JFrame
 import javax.imageio.ImageIO
 import java.io.File
 import evaluation.actor.{StitchImageActor, FixedImageActor}
 import evaluation.gui.ImagePanel
+import javax.swing.JFrame
+import evaluation.engine.{TestLayoutToImg, TestLayout}
 
 /**
  * Created with IntelliJ IDEA.
  * User: alvaro
- * Date: 27/12/13
- * Time: 23:57
+ * Date: 30/12/13
+ * Time: 0:26
  * To change this template use File | Settings | File Templates.
  */
-object StitchImageAndPanelSample extends App{
+object TestLayoutSample extends App {
 
-  val image = ImageIO.read( new File("./src/testimages/stitch/borders-05.jpg"))
+  val layout = TestLayout(135,4)
+
+
+  val image = TestLayoutToImg(layout)
   val ia = new FixedImageActor(image)
-  val pattern = ImageIO.read( new File("./src/testimages/stitch/borders-00.jpg"))
-  val sia = new StitchImageActor(pattern,ia)
-  val panel = ImagePanel(sia)
+  val panel = ImagePanel(ia)
 
-  val frame = new JFrame("Stitch image sample")
+  val frame = new JFrame("Test Layout sample")
   frame add panel
+
   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 
-  frame.setSize(200,200)
+  frame.setSize(200, 200)
   frame.setVisible(true)
 
 
