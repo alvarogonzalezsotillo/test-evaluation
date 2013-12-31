@@ -19,7 +19,7 @@ object StitchImageAndPanelSample extends App{
   val ia = new FixedImageActor(image)
   val pattern = ImageIO.read( new File("./src/testimages/stitch/borders-00.jpg"))
   val sia = new StitchImageActor(pattern,ia)
-  val panel = ImagePanel(sia)
+  val panel = ImagePanel(sia, "Stitched")
 
   val frame = new JFrame("Stitch image sample")
   frame add panel

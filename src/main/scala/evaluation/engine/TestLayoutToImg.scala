@@ -18,7 +18,7 @@ object TestLayoutToImg {
 
   def apply(layout: TestLayout): Img = {
     val boundingBox = layout.boundingBox
-    val margin = 20
+    val margin = boundingBox.width * 0.2f
     val size = boundingBox.grow(margin)
 
     Log( s"TestLayoutToImg: size: $size")

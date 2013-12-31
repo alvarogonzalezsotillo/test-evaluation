@@ -25,7 +25,7 @@ object StitchLayoutSample extends App{
   val image = ImageIO.read( new File("./src/testimages/layout/msword-135.jpg"))
   val ia = new FixedImageActor(image)
   val sia = new StitchImageActor(pattern,ia)
-  val panel = ImagePanel(sia)
+  val panel = ImagePanel(sia, "Stitched")
 
   val frame = new JFrame("Stitch layout image sample")
   frame add panel

@@ -15,6 +15,7 @@ object ImageMessages {
 
   type Img = BufferedImage
   type Time = Long
+
   val noTime : Time = -1
 
   case class GetImage(requester: Actor, lastTime: Time )

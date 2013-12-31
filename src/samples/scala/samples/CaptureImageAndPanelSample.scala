@@ -14,7 +14,7 @@ import evaluation.gui.ImagePanel
 object CaptureImageAndPanelSample extends App{
 
   val cia = new CaptureImageActor
-  val panel = ImagePanel(cia)
+  val panel = ImagePanel(cia, "Webcam")
 
   val frame = new JFrame("Capture image and panel sample")
   frame add panel

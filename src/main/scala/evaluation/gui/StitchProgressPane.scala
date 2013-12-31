@@ -16,13 +16,13 @@ import java.awt.{Dimension, GridLayout, BorderLayout}
 
 class StitchProgressPane(pattern: Img, imageActor: Actor) extends JPanel {
 
-  private val patternPanel = ImagePanel(pattern)
+  private val patternPanel = ImagePanel(pattern, "Pattern image")
 
-  private val imagePanel = ImagePanel(imageActor)
+  private val imagePanel = ImagePanel(imageActor, "Image to be stitched")
 
   private val stitchActor = new StitchImageActor(pattern, imageActor)
 
-  private val stitchedPanel = ImagePanel(stitchActor)
+  private val stitchedPanel = ImagePanel(stitchActor, "Stitched")
 
   setLayout(new BorderLayout)
   add(stitchedPanel, BorderLayout.CENTER)

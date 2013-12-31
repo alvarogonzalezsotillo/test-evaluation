@@ -10,19 +10,22 @@ package evaluation.engine
 
 import Geom._
 
-object TestLayout{
-  def apply( questionNumber: Int,  optionNumber: Int) = new TestLayout(questionNumber, optionNumber )
+object TestLayout {
+  def apply(questionNumber: Int, optionNumber: Int) = new TestLayout(questionNumber, optionNumber)
 }
 
 class TestLayout(val questionNumber: Int, val optionNumber: Int) {
 
   val questionsPerLine = 5
-  val lineSpacing = 5
-  val boxHeight = 10
-  val questionNumberColumnWidth = 20
-  val questionNumberWidth = 15
-  val answerWidth = 10
-  val answerColumnWidth = 15
+
+  val factor = 3
+
+  val lineSpacing = 5 * factor
+  val boxHeight = 10 * factor
+  val questionNumberColumnWidth = 20 * factor
+  val questionNumberWidth = 15 * factor
+  val answerWidth = 10 * factor
+  val answerColumnWidth = 15 * factor
 
 
   lazy val questionWidth = questionNumberColumnWidth + answerColumnWidth * optionNumber
@@ -66,6 +69,6 @@ class TestLayout(val questionNumber: Int, val optionNumber: Int) {
     val left = allRects.map(_.left).min
     val bottom = allRects.map(_.bottom).max
     val right = allRects.map(_.right).max
-    Rect(left,top, right - left, bottom - top)
+    Rect(left, top, right - left, bottom - top)
   }
 }
