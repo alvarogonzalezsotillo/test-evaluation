@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
 public class BinaryImage {
 
 
-    private static BufferedImage toBinaryimage(BufferedImage image, boolean erodeAndDilate) {
+    public static BufferedImage toBinaryimage(BufferedImage image, boolean erodeAndDilate) {
 
         // convert into a usable format
         ImageFloat32 input = ConvertBufferedImage.convertFromSingle(image, null, ImageFloat32.class);
@@ -42,6 +42,9 @@ public class BinaryImage {
         }
 
         BufferedImage visualFiltered = VisualizeBinaryData.renderBinary(filtered, null);
-        return visualFiltered;
+        BufferedImage ret = new BufferedImage(visualFiltered.getWidth(),visualFiltered.getHeight(),BufferedImage.TYPE_INT_RGB);
+        ret.getGraphics().drawImage(visualFiltered,0,0,null);
+
+        return ret;
     }
 }

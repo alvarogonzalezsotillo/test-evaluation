@@ -1,9 +1,8 @@
 package evaluation.actor
 
-import scala.actors.Actor
 import evaluation.engine.Stitcher
-import evaluation.actor.ImageMessages.{GetImage, LastImage, Img}
-import evaluation.Log
+import evaluation.actor.ImageMessages.{GetImage, LastImage, Img, Time}
+import scala.actors.Actor
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,44 +13,36 @@ import evaluation.Log
  */
 
 
-class StitchImageActor( pattern : Img, imageActor: Actor ) extends Actor{
+class StitchImageActor(patternActor: Actor, imageActor: Actor) extends ProcessImageActor(imageActor) {
 
-  val stitcher = new Stitcher(pattern)
+  var stitcher: Stitcher = null
 
-  val self = this
+  class FromPattern extends Actor {
+    val self = this
+    patternActor ! GetImage(self, ImageMessages.noTime)
 
-  var _lastImage : LastImage = null
-
-  var _pendingRequests = List[GetImage]()
-
-  def act(){
-    loop{
-      receive{
-
-        case LastImage(image,time) =>
-          Log( s"$this: LastImage received")
-          _lastImage = LastImage(stitcher.stitch(image),time)
-          _pendingRequests.filter(_.lastTime < time).foreach( _.requester ! _lastImage )
-          _pendingRequests = _pendingRequests.filter(_.lastTime >= time)
-
-        case GetImage(requester,lastTime) =>
-          Log( s"$this: GetImage received")
-          if ( _lastImage != null && lastTime < _lastImage.time ) {
-            // cached image newer than lastTime
-            Log( s"  cached image is new enough")
-            requester ! _lastImage
-          }
-          else {
-            // cached image not updated, request a new one
-            Log( s"  requesting newer image")
-            imageActor ! GetImage(self,lastTime)
-            _pendingRequests = GetImage(requester,lastTime) :: _pendingRequests
-          }
-
-
+    def act() {
+      loop {
+        receive {
+          case LastImage(sender: Actor, image: Img, time: Time) =>
+            stitcher = new Stitcher(image)
+            patternActor ! GetImage(self, time)
+        }
       }
+    }
+
+    start()
+  }
+
+  new FromPattern
+
+  def processImage(image: Img) = {
+    if (stitcher != null) {
+      stitcher.stitch(image)
+    }
+    else {
+      null
     }
   }
 
-  start()
 }

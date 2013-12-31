@@ -10,7 +10,7 @@ package evaluation.gui
 
 import javax.swing.JPanel
 import scala.actors.Actor
-import evaluation.actor.StitchImageActor
+import evaluation.actor.{FixedImageActor, BinaryImageActor, StitchImageActor}
 import evaluation.actor.ImageMessages.Img
 import java.awt.{Dimension, GridLayout, BorderLayout}
 
@@ -20,7 +20,11 @@ class StitchProgressPane(pattern: Img, imageActor: Actor) extends JPanel {
 
   private val imagePanel = ImagePanel(imageActor, "Image to be stitched")
 
-  private val stitchActor = new StitchImageActor(pattern, imageActor)
+  private val binaryActor = new BinaryImageActor(imageActor)
+
+  private val binaryPanel = ImagePanel(binaryActor, "Binary image")
+
+  private val stitchActor = new StitchImageActor( new FixedImageActor(pattern), binaryActor)
 
   private val stitchedPanel = ImagePanel(stitchActor, "Stitched")
 
@@ -30,8 +34,9 @@ class StitchProgressPane(pattern: Img, imageActor: Actor) extends JPanel {
   private val leftPanel = new JPanel
   add(leftPanel, BorderLayout.NORTH)
 
-  leftPanel.setLayout(new GridLayout(1, 2))
+  leftPanel.setLayout(new GridLayout(1, 3))
   leftPanel.add(patternPanel)
+  leftPanel.add(binaryPanel)
   leftPanel.add(imagePanel)
   leftPanel.setPreferredSize( new Dimension(200,200) )
 }

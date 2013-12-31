@@ -15,6 +15,8 @@ class FixedImageActor(image: Img, continuous: Boolean = false) extends Actor {
 
   var time = System.currentTimeMillis()
 
+  val self = this
+
   def act() {
 
     loop {
@@ -25,7 +27,7 @@ class FixedImageActor(image: Img, continuous: Boolean = false) extends Actor {
             time = System.currentTimeMillis();
           }
           if( lastTime < time ){
-            requester ! LastImage(image,time)
+            requester ! LastImage(self, image,time)
           }
       }
     }

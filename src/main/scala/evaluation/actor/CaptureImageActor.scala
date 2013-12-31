@@ -57,7 +57,7 @@ class CaptureImageActor extends Actor {
 
         case ImageCaptured(image, time) =>
           //Log( "Image captured -> to _lastImage" )
-          _lastImage = LastImage(image, time )
+          _lastImage = LastImage(self, image, time )
           _pendingRequests.filter(_.lastTime < time).foreach( _.requester ! _lastImage )
           _pendingRequests = _pendingRequests.filter(_.lastTime >= time)
 

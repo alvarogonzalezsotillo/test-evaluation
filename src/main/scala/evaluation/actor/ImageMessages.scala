@@ -20,6 +20,6 @@ object ImageMessages {
 
   case class GetImage(requester: Actor, lastTime: Time )
 
-  case class LastImage(image: Img, time: Time)
+  case class LastImage(sender: Actor, image: Img, time: Time)
 
 }
