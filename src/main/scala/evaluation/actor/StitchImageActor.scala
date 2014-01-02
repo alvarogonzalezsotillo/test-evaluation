@@ -25,7 +25,7 @@ class StitchImageActor(patternActor: Actor, imageActor: Actor) extends ProcessIm
       loop {
         receive {
           case LastImage(sender: Actor, image: Img, time: Time) =>
-            stitcher = new Stitcher(image.visualizable)
+            stitcher = Stitcher.create(image.visualizable)
             patternActor ! GetImage(self, time)
         }
       }
