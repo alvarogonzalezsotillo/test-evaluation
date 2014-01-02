@@ -148,9 +148,9 @@ public class Stitcher {
     public static BufferedImage renderStitching(BufferedImage imageA, BufferedImage imageB,
                                                 Homography2D_F64 fromAtoB) {
         // specify size of output image
-        double scale = 0.5;
-        int outputWidth = imageA.getWidth();
-        int outputHeight = imageA.getHeight();
+        double scale = 2;
+        int outputWidth = (int) (scale*imageA.getWidth());
+        int outputHeight = (int) (scale*imageA.getHeight());
 
         // Convert into a BoofCV color format
         MultiSpectral<ImageFloat32> colorA = ConvertBufferedImage.convertFromMulti(imageA, null, ImageFloat32.class);
@@ -160,7 +160,7 @@ public class Stitcher {
         MultiSpectral<ImageFloat32> work = new MultiSpectral<ImageFloat32>(ImageFloat32.class, outputWidth, outputHeight, 3);
 
         // Adjust the transform so that the whole image can appear inside of it
-        Homography2D_F64 fromAToWork = new Homography2D_F64(scale, 0, colorA.width / 4, 0, scale, colorA.height / 4, 0, 0, 1);
+        Homography2D_F64 fromAToWork = new Homography2D_F64(scale, 0, 0, 0, scale, 0, 0, 0, 1);
         Homography2D_F64 fromWorkToA = fromAToWork.invert(null);
 
         // Used to render the results onto an image
@@ -210,14 +210,19 @@ public class Stitcher {
         return new Point2D_I32((int) result.x, (int) result.y);
     }
 
-    public BufferedImage stitch(BufferedImage image) {
+    public BufferedImage stitch(BufferedImage image, boolean crop) {
         try {
             Homography2D_F64 H = stitchHomography(_pattern, image, ImageFloat32.class);
-            return renderStitching(_pattern, image, H);
+            BufferedImage ret = renderStitching(_pattern, image, H);
+            return ret;
         }
         catch (Exception e) {
             Log.apply( "Problem stitching image:" + e.toString() );
             return null;
         }
+    }
+
+    public BufferedImage stitch(BufferedImage image){
+        return stitch(image,false);
     }
 }

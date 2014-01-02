@@ -12,7 +12,12 @@ import evaluation.engine.{Img, BinaryImage}
  */
 class BinaryImageActor( imageActor: Actor, erodeAndDilate: Boolean = true ) extends ProcessImageActor(imageActor){
   def processImage(image: Img)  = {
-    val ret = BinaryImage.toBinaryimage(image.visualizable,erodeAndDilate)
-    Img(ret)
+    if( image.visualizable != null ){
+      val ret = BinaryImage.toBinaryimage(image.visualizable,erodeAndDilate)
+      Img(ret)
+    }
+    else{
+      null
+    }
   }
 }

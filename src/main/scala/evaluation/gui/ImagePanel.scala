@@ -5,6 +5,8 @@ import java.awt.{Color, RenderingHints, Graphics2D, Graphics}
 import scala.actors.Actor
 import evaluation.actor.ImagePanelActor
 import evaluation.engine.Img
+import java.awt.image.AffineTransformOp
+import java.awt.geom.AffineTransform
 
 /**
  * Created with IntelliJ IDEA.
@@ -55,11 +57,16 @@ class ImagePanel() extends JPanel {
   override def paint(g: Graphics) {
     val size = getSize()
 
-    g.asInstanceOf[Graphics2D].setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 
     def paintImage {
-      if (image != null) {
-        g.drawImage(image.visualizable, 0, 0, size.width, size.height, null)
+      if (image != null && image.visualizable != null) {
+        val g2d = g.create().asInstanceOf[Graphics2D]
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+        val img = image.visualizable
+        val af = AffineTransform.getScaleInstance(size.getWidth/img.getWidth, size.getHeight/img.getHeight)
+        g2d.transform(af)
+        g2d.drawImage(img, 0, 0, null)
+        g2d.dispose()
       }
     }
     def paintLabel {
@@ -73,7 +80,6 @@ class ImagePanel() extends JPanel {
       g.drawString(label,margin, size.height-margin)
     }
 
-    paintLabel
     paintImage
     paintLabel
   }
