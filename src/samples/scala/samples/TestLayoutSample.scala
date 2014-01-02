@@ -3,7 +3,7 @@ package samples
 import javax.imageio.ImageIO
 import java.io.File
 import evaluation.actor.{StitchImageActor, FixedImageActor}
-import evaluation.gui.{StitchProgressPane, ImagePanel}
+import evaluation.gui.{ImagePanel}
 import javax.swing.JFrame
 import evaluation.engine.{Img, TestLayoutToImg, TestLayout}
 

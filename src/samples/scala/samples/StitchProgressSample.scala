@@ -2,7 +2,7 @@ package samples
 
 import evaluation.engine.{TestLayoutToImg, TestLayout}
 import evaluation.actor.{CaptureImageActor, StitchImageActor, FixedImageActor}
-import evaluation.gui.{StitchProgressPane, ImagePanel}
+import evaluation.gui.{ImagePanel}
 import javax.swing.JFrame
 import javax.imageio.ImageIO
 import java.io.File
