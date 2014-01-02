@@ -22,6 +22,7 @@ import boofcv.struct.geo.AssociatedPair;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.MultiSpectral;
+import evaluation.Log;
 import georegression.struct.homo.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
@@ -107,7 +108,7 @@ public class Stitcher {
 
         // find the best fit model to describe the change between these images
         if (!modelMatcher.process(pairs))
-            throw new RuntimeException("Model Matcher failed!");
+            throw new IllegalStateException( "No match found");
 
         // return the found image transform
         return modelMatcher.getModel().copy();
@@ -145,7 +146,7 @@ public class Stitcher {
      * Renders and displays the stitched together images
      */
     public static BufferedImage renderStitching(BufferedImage imageA, BufferedImage imageB,
-                                                 Homography2D_F64 fromAtoB) {
+                                                Homography2D_F64 fromAtoB) {
         // specify size of output image
         double scale = 0.5;
         int outputWidth = imageA.getWidth();
@@ -210,7 +211,13 @@ public class Stitcher {
     }
 
     public BufferedImage stitch(BufferedImage image) {
-        Homography2D_F64 H = stitchHomography(_pattern, image, ImageFloat32.class);
-        return renderStitching(_pattern, image, H);
+        try {
+            Homography2D_F64 H = stitchHomography(_pattern, image, ImageFloat32.class);
+            return renderStitching(_pattern, image, H);
+        }
+        catch (Exception e) {
+            Log.apply( "Problem stitching image:" + e.toString() );
+            return null;
+        }
     }
 }

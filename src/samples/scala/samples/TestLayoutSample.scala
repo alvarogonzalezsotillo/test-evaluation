@@ -5,7 +5,7 @@ import java.io.File
 import evaluation.actor.{StitchImageActor, FixedImageActor}
 import evaluation.gui.{StitchProgressPane, ImagePanel}
 import javax.swing.JFrame
-import evaluation.engine.{TestLayoutToImg, TestLayout}
+import evaluation.engine.{Img, TestLayoutToImg, TestLayout}
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,7 +20,7 @@ object TestLayoutSample extends App {
 
 
   val pattern = TestLayoutToImg(layout)
-  val ia = new FixedImageActor( ImageIO.read( new File( "./src/testimages/layout/msword-135.jpg")))
+  val ia = new FixedImageActor( Img(ImageIO.read( new File( "./src/testimages/layout/msword-135.jpg"))))
 
   val frame = new JFrame("Test Layout sample")
   frame add new StitchProgressPane(pattern,ia)

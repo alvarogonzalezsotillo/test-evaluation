@@ -1,7 +1,7 @@
 package evaluation.actor
 
-import evaluation.engine.Stitcher
-import evaluation.actor.ImageMessages.{GetImage, LastImage, Img, Time}
+import evaluation.engine.{Img, Stitcher}
+import evaluation.actor.ImageMessages.{GetImage, LastImage, Time}
 import scala.actors.Actor
 
 /**
@@ -25,7 +25,7 @@ class StitchImageActor(patternActor: Actor, imageActor: Actor) extends ProcessIm
       loop {
         receive {
           case LastImage(sender: Actor, image: Img, time: Time) =>
-            stitcher = new Stitcher(image)
+            stitcher = new Stitcher(image.visualizable)
             patternActor ! GetImage(self, time)
         }
       }
@@ -38,7 +38,8 @@ class StitchImageActor(patternActor: Actor, imageActor: Actor) extends ProcessIm
 
   def processImage(image: Img) = {
     if (stitcher != null) {
-      stitcher.stitch(image)
+      val ret = stitcher.stitch(image.visualizable)
+      Img(ret)
     }
     else {
       null

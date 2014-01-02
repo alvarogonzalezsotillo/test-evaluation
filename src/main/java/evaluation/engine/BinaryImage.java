@@ -28,6 +28,7 @@ public class BinaryImage {
 
         // the mean pixel value is often a reasonable threshold when creating a binary image
         double mean = ImageStatistics.mean(input);
+        //mean -= mean*.1;
 
         // create a binary image by thresholding
         ThresholdImageOps.threshold(input, binary, (float) mean, false);

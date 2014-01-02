@@ -4,7 +4,7 @@ import javax.swing.JPanel
 import java.awt.{Color, RenderingHints, Graphics2D, Graphics}
 import scala.actors.Actor
 import evaluation.actor.ImagePanelActor
-import evaluation.actor.ImageMessages.Img
+import evaluation.engine.Img
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,7 +59,7 @@ class ImagePanel() extends JPanel {
 
     def paintImage {
       if (image != null) {
-        g.drawImage(image, 0, 0, size.width, size.height, null)
+        g.drawImage(image.visualizable, 0, 0, size.width, size.height, null)
       }
     }
     def paintLabel {

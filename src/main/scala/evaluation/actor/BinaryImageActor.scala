@@ -1,8 +1,7 @@
 package evaluation.actor
 
 import scala.actors.Actor
-import evaluation.actor.ImageMessages.Img
-import evaluation.engine.BinaryImage
+import evaluation.engine.{Img, BinaryImage}
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +12,7 @@ import evaluation.engine.BinaryImage
  */
 class BinaryImageActor( imageActor: Actor, erodeAndDilate: Boolean = true ) extends ProcessImageActor(imageActor){
   def processImage(image: Img)  = {
-    BinaryImage.toBinaryimage(image,erodeAndDilate)
+    val ret = BinaryImage.toBinaryimage(image.visualizable,erodeAndDilate)
+    Img(ret)
   }
 }

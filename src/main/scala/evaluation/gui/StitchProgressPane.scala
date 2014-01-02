@@ -11,8 +11,8 @@ package evaluation.gui
 import javax.swing.JPanel
 import scala.actors.Actor
 import evaluation.actor.{FixedImageActor, BinaryImageActor, StitchImageActor}
-import evaluation.actor.ImageMessages.Img
 import java.awt.{Dimension, GridLayout, BorderLayout}
+import evaluation.engine.Img
 
 class StitchProgressPane(pattern: Img, imageActor: Actor) extends JPanel {
 

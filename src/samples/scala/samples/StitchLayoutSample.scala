@@ -1,6 +1,6 @@
 package samples
 
-import evaluation.engine.{TestLayoutToImg, TestLayout}
+import evaluation.engine.{Img, TestLayoutToImg, TestLayout}
 import evaluation.actor.{StitchImageActor, FixedImageActor}
 import evaluation.gui.ImagePanel
 import javax.swing.JFrame
@@ -23,7 +23,7 @@ object StitchLayoutSample extends App{
 
 
   val image = ImageIO.read( new File("./src/testimages/layout/msword-135.jpg"))
-  val ia = new FixedImageActor(image)
+  val ia = new FixedImageActor(Img(image))
   val sia = new StitchImageActor(new FixedImageActor(pattern),ia)
   val panel = ImagePanel(sia, "Stitched")
 

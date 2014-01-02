@@ -8,7 +8,7 @@ package evaluation
  * To change this template use File | Settings | File Templates.
  */
 object Log {
-  def apply( s: => AnyRef ) = {
+  def apply( s: AnyRef ) = {
     val threadName = Thread.currentThread.getName
     println( s"$threadName - ${s.toString} ")
   }

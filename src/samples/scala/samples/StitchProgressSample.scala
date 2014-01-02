@@ -14,7 +14,7 @@ import java.io.File
  * Time: 10:13
  * To change this template use File | Settings | File Templates.
  */
-object ContinuousStitchLayoutSample extends App{
+object StitchProgressSample extends App{
 
 
   val layout = TestLayout(135,4)

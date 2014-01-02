@@ -1,8 +1,9 @@
 package evaluation.actor
 
 import scala.actors.Actor
-import evaluation.actor.ImageMessages.{LastImage, GetImage, Img}
+import evaluation.actor.ImageMessages.{LastImage, GetImage}
 import evaluation.Log
+import evaluation.engine.Img
 
 /**
  * Created with IntelliJ IDEA.

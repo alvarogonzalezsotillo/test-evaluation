@@ -1,6 +1,5 @@
 package evaluation.engine
 
-import evaluation.actor.ImageMessages.Img
 import java.awt.image.BufferedImage
 import java.awt.geom.AffineTransform
 import java.awt.{Color, Graphics2D}
@@ -52,6 +51,6 @@ object TestLayoutToImg {
 
 
     g2d.dispose()
-    ret
+    Img(ret)
   }
 }

@@ -1,12 +1,10 @@
 package evaluation.actor
 
 import scala.actors.Actor
-import java.awt.Image
-import com.github.sarxos.webcam.Webcam
-import evaluation.engine.VideoCapture
+import evaluation.engine.{Img, VideoCapture}
 import VideoCapture.ImageCapturedListener
-import evaluation.{Log}
-import evaluation.actor.ImageMessages.{Time, GetImage, LastImage, Img}
+import evaluation.Log
+import evaluation.actor.ImageMessages.{Time, GetImage, LastImage}
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,9 +30,9 @@ class CaptureImageActor extends Actor {
 
   private val vc = new VideoCapture()
   private val vct = vc.startVideoCapture(new ImageCapturedListener {
-    def imageCaptured(i: Img) {
+    def imageCaptured(i: Img.Visualizable) {
       //Log( "Image captured" )
-      self ! ImageCaptured(i, System.currentTimeMillis )
+      self ! ImageCaptured(Img(i), System.currentTimeMillis)
       Thread.sleep(_minMillisBetweenFrames)
     }
   })
@@ -46,19 +44,19 @@ class CaptureImageActor extends Actor {
 
     loop {
       receive {
-        case GetImage(requester,lastTime) =>
+        case GetImage(requester, lastTime) =>
           //Log(s"Sending last image to $requester")
-          if (_lastImage != null && lastTime < _lastImage.time ) {
+          if (_lastImage != null && lastTime < _lastImage.time) {
             requester ! _lastImage
           }
           else {
-            _pendingRequests = GetImage(requester,lastTime) :: _pendingRequests
+            _pendingRequests = GetImage(requester, lastTime) :: _pendingRequests
           }
 
         case ImageCaptured(image, time) =>
           //Log( "Image captured -> to _lastImage" )
-          _lastImage = LastImage(self, image, time )
-          _pendingRequests.filter(_.lastTime < time).foreach( _.requester ! _lastImage )
+          _lastImage = LastImage(self, image, time)
+          _pendingRequests.filter(_.lastTime < time).foreach(_.requester ! _lastImage)
           _pendingRequests = _pendingRequests.filter(_.lastTime >= time)
 
         case Stop(requester) =>
