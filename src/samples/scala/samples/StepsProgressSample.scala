@@ -21,8 +21,8 @@ object StepsProgressSample extends App{
 
 
 
-  //val pattern = TestLayoutToImg(layout)
-  val pattern = ImageIO.read( new File("./src/testimages/stitch/borders-00.jpg"))
+  val pattern = TestLayoutToImg(layout)
+  //val pattern = ImageIO.read( new File("./src/testimages/stitch/borders-00.jpg"))
 
 
 

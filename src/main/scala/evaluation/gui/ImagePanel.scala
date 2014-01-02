@@ -56,6 +56,12 @@ class ImagePanel() extends JPanel {
 
   def img() = _image
 
+  private val hints = List(
+    (KEY_ANTIALIASING, VALUE_ANTIALIAS_ON),
+    (KEY_RENDERING, VALUE_RENDER_QUALITY),
+    (KEY_INTERPOLATION, VALUE_INTERPOLATION_BICUBIC)
+  )
+
   override def paint(g: Graphics) {
     val size = getSize()
 
@@ -63,13 +69,7 @@ class ImagePanel() extends JPanel {
     def paintImage {
       if (image != null && image.visualizable != null) {
         val g2d = g.create().asInstanceOf[Graphics2D]
-        List(
-          (KEY_ANTIALIASING, VALUE_ANTIALIAS_ON),
-          (KEY_RENDERING, VALUE_RENDER_QUALITY),
-          (KEY_INTERPOLATION, VALUE_INTERPOLATION_BICUBIC)
-        ).foreach(p => g2d.setRenderingHint(p._1, p._2))
-
-
+        hints.foreach(p => g2d.setRenderingHint(p._1, p._2))
         val img = image.visualizable
         val af = AffineTransform.getScaleInstance(size.getWidth / img.getWidth, size.getHeight / img.getHeight)
         g2d.transform(af)

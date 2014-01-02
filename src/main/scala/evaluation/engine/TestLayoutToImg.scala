@@ -15,24 +15,22 @@ import evaluation.engine.Geom.Rect
  */
 object TestLayoutToImg {
 
-  def apply(layout: TestLayout): Img = {
+  def apply(layout: TestLayout): Img.Visualizable = {
     val boundingBox = layout.boundingBox
     val margin = boundingBox.width * 0.2f
     val size = boundingBox.grow(margin)
-
-    Log( s"TestLayoutToImg: size: $size")
 
     val w = size.width.asInstanceOf[Int]
     val h = size.height.asInstanceOf[Int]
 
     val ret = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB)
-    Log( s"  ret: ${ret.getWidth}, ${ret.getHeight}")
 
     val g2d = ret.getGraphics.asInstanceOf[Graphics2D]
     g2d.setColor(Color.WHITE)
     g2d.fillRect(0,0,w,h)
 
-    val t = AffineTransform.getTranslateInstance(-size.left, -size.top)
+
+    val t = AffineTransform.getTranslateInstance(margin, margin)
     g2d.setTransform(t)
     g2d.setColor(Color.BLACK)
 
@@ -41,7 +39,6 @@ object TestLayoutToImg {
       val y = r.top.asInstanceOf[Int]
       val w = r.width.asInstanceOf[Int]
       val h = r.height.asInstanceOf[Int]
-      Log( s"  $x,$y,$w,$h")
       drawer(x,y,w,h)
     }
 
@@ -51,6 +48,10 @@ object TestLayoutToImg {
 
 
     g2d.dispose()
-    Img(ret)
+    ret
+  }
+
+  def apply(layout: TestLayout, visualizable: Img.Visualizable ){
+
   }
 }
