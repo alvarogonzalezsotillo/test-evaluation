@@ -44,7 +44,7 @@ object TestLayoutToImg {
 
     layout.questionRects.map( drawRect(_, g2d.fillRect) )
     layout.answerOptionHeaderRects.flatten.map( drawRect(_, g2d.fillRect) )
-    layout.answerOptionRects.flatten.map( drawRect(_, (x,y,w,h) => g2d.drawRoundRect(x,y,w,h,5,5) ) )
+    //layout.answerOptionRects.flatten.map( drawRect(_, (x,y,w,h) => g2d.drawRoundRect(x,y,w,h,5,5) ) )
 
 
     g2d.dispose()

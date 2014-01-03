@@ -23,7 +23,6 @@ class FixedImageActor(image: Img, continuous: Boolean = false) extends Actor {
     loop {
       receive {
         case GetImage(requester,lastTime) =>
-          Log( s"$this: GetImage($requester,$lastTime)  time:$time")
           if( continuous ){
             time = System.currentTimeMillis();
           }

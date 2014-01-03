@@ -36,9 +36,12 @@ object StitchImageActor{
         if( images.exists(_==null) ){
           null
         }
-        else{
+        else if( stitcher(images(0)) != null ){
           val ret = stitcher(images(0)).stitch( images(1).visualizable )
           Img(ret)
+        }
+        else{
+          null
         }
       }
     }

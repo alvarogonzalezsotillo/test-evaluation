@@ -56,6 +56,7 @@ public abstract class Stitcher {
     public abstract BufferedImage stitch(BufferedImage image);
 
     public static Stitcher create(BufferedImage pattern){
-        return new SlowStitcher(pattern);
+        //return new SlowStitcher(pattern);
+        return new FastStitcher(pattern);
     }
 }
