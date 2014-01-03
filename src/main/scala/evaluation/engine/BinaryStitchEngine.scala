@@ -19,12 +19,13 @@ class BinaryStitchEngine(patternActor: Actor, imageActor: Actor) extends Engine 
 
   private val binaryPatternActor = BinaryImageActor(patternActor, explodeErode)
 
+  private val stitchActor_binary = StitchImageActor(binaryPatternActor,binaryImageActor)
   private val stitchActor = StitchImageActor(patternActor,imageActor)
 
 
 
 
-  val imageActors = IndexedSeq(patternActor, binaryPatternActor, imageActor, binaryImageActor, stitchActor)
+  val imageActors = IndexedSeq(patternActor, binaryPatternActor, imageActor, binaryImageActor, stitchActor_binary, stitchActor)
 }
 
 object BinaryStitchEngine {
