@@ -14,45 +14,35 @@ import evaluation.Log
  */
 
 
-class StitchImageActor(patternActor: Actor, imageActor: Actor) extends ProcessImageActor(imageActor) {
+object StitchImageActor{
 
-  var stitcher: Stitcher = null
+  def apply(patternActor: Actor, imageActor: Actor) = {
 
-  val outter = this
+    object stitcher{
 
-  class FromPattern extends Actor {
-    val self = this
-    patternActor ! GetImage(self, ImageMessages.noTime)
+      private var _stitcher : Stitcher = null
+      private var _lastVisualizable : Img.Visualizable = null
 
-    def act() {
-      loop {
-        receive {
-          case LastImage(sender: Actor, image: Img, time: Time) =>
-            Log( s"$this: pattern actor updated")
-            stitcher = Stitcher.create(image.visualizable)
-            patternActor ! GetImage(self, time)
-          case u =>
-            Log( s"$this: Unexpected: $u")
+      def stitcher( img: Img ) = {
+        val visualizable = img.visualizable
+        if( visualizable != null && visualizable == _lastVisualizable ){
+          _stitcher = Stitcher.create(visualizable)
+        }
+        _lastVisualizable = visualizable
+        _stitcher
+      }
 
-
+      def stitchImages( images: IndexedSeq[Img] ) = {
+        if( images.exists(_==null) ){
+          null
+        }
+        else{
+          val ret = stitcher(images(0)).stitch( images(1).visualizable )
+          Img(ret)
         }
       }
     }
 
-    start()
+    new ProcessImagesActor(IndexedSeq(patternActor,imageActor), stitcher.stitchImages )
   }
-
-  new FromPattern
-
-  def processImage(image: Img) = {
-    if (stitcher != null) {
-      Log( s"$this: stitching...")
-      val ret = stitcher.stitch(image.visualizable)
-      Img(ret)
-    }
-    else {
-      null
-    }
-  }
-
 }
