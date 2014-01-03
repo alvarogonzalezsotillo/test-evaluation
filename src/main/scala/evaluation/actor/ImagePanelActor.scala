@@ -26,10 +26,7 @@ class ImagePanelActor(imageActor: Actor, imagePanel: ImagePanel) extends Actor {
 
 
   def act {
-    Log("Starting ImagePanelActor")
     imageActor ! GetImage(self, ImageMessages.noTime)
-
-    Log("Sent initial GetlastImage")
 
     loop {
       receive {

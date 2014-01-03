@@ -147,7 +147,7 @@ public class SlowStitcher extends Stitcher{
     public static BufferedImage renderStitching(BufferedImage imageA, BufferedImage imageB,
                                                 Homography2D_F64 fromAtoB) {
         // specify size of output image
-        double scale = 2;
+        double scale = 1;
         int outputWidth = (int) (scale*imageA.getWidth());
         int outputHeight = (int) (scale*imageA.getHeight());
 
@@ -177,7 +177,7 @@ public class SlowStitcher extends Stitcher{
         distort.apply(colorB, work);
 
         // Convert the rendered image into a BufferedImage
-        BufferedImage output = new BufferedImage(work.width, work.height, imageA.getType());
+        BufferedImage output = new BufferedImage(work.width, work.height, BufferedImage.TYPE_INT_RGB);
         ConvertBufferedImage.convertTo(work, output);
 
         Graphics2D g2 = output.createGraphics();
@@ -209,19 +209,15 @@ public class SlowStitcher extends Stitcher{
         return new Point2D_I32((int) result.x, (int) result.y);
     }
 
-    public BufferedImage stitch(BufferedImage image, boolean crop) {
+    public BufferedImage stitch(BufferedImage image) {
         try {
             Homography2D_F64 H = stitchHomography(_pattern, image, ImageFloat32.class);
             BufferedImage ret = renderStitching(_pattern, image, H);
             return ret;
         }
-        catch (Exception e) {
-            Log.apply( "Problem stitching image:" + e.toString() );
+        catch (IllegalStateException e) {
+            Log.apply( "Problem stitching image: " + e.toString() );
             return null;
         }
-    }
-
-    public BufferedImage stitch(BufferedImage image){
-        return stitch(image,false);
     }
 }

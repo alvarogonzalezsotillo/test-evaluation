@@ -3,6 +3,7 @@ package evaluation.actor
 import evaluation.engine.{Img, Stitcher}
 import evaluation.actor.ImageMessages.{GetImage, LastImage, Time}
 import scala.actors.Actor
+import evaluation.Log
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +18,8 @@ class StitchImageActor(patternActor: Actor, imageActor: Actor) extends ProcessIm
 
   var stitcher: Stitcher = null
 
+  val outter = this
+
   class FromPattern extends Actor {
     val self = this
     patternActor ! GetImage(self, ImageMessages.noTime)
@@ -25,8 +28,13 @@ class StitchImageActor(patternActor: Actor, imageActor: Actor) extends ProcessIm
       loop {
         receive {
           case LastImage(sender: Actor, image: Img, time: Time) =>
+            Log( s"$this: pattern actor updated")
             stitcher = Stitcher.create(image.visualizable)
             patternActor ! GetImage(self, time)
+          case u =>
+            Log( s"$this: Unexpected: $u")
+
+
         }
       }
     }
@@ -38,6 +46,7 @@ class StitchImageActor(patternActor: Actor, imageActor: Actor) extends ProcessIm
 
   def processImage(image: Img) = {
     if (stitcher != null) {
+      Log( s"$this: stitching...")
       val ret = stitcher.stitch(image.visualizable)
       Img(ret)
     }

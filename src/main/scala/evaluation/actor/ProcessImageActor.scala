@@ -14,6 +14,7 @@ import evaluation.engine.Img
  * Time: 15:49
  * To change this template use File | Settings | File Templates.
  */
+
 abstract class ProcessImageActor(imageActor: Actor) extends Actor {
 
   private var _lastImage: LastImage = null
@@ -49,7 +50,8 @@ abstract class ProcessImageActor(imageActor: Actor) extends Actor {
             _pendingRequests = GetImage(requester, lastTime) :: _pendingRequests
           }
 
-
+        case u =>
+          Log( s"$this: Unexpected: $u")
       }
     }
   }
