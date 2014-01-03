@@ -10,14 +10,19 @@ import evaluation.engine.{Img, BinaryImage}
  * Time: 14:50
  * To change this template use File | Settings | File Templates.
  */
-class BinaryImageActor( imageActor: Actor, erodeAndDilate: Boolean = true ) extends ProcessImageActor(imageActor){
-  def processImage(image: Img)  = {
-    if( image.visualizable != null ){
-      val ret = BinaryImage.toBinaryimage(image.visualizable,erodeAndDilate)
-      Img(ret)
+
+object BinaryImageActor {
+
+  def binarizer(erodeAndDilate: Boolean)(images: IndexedSeq[Img]) = {
+    if (images(0) != null && images(0).visualizable != null) {
+      Img(BinaryImage.toBinaryimage(images(0).visualizable, erodeAndDilate))
     }
-    else{
+    else {
       null
     }
+  }
+
+  def apply(imageActor: Actor, erodeAndDilate: Boolean = true) = {
+    new ProcessImagesActor(IndexedSeq(imageActor), binarizer(erodeAndDilate))
   }
 }

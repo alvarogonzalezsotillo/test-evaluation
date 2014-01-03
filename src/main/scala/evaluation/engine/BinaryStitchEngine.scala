@@ -15,9 +15,9 @@ class BinaryStitchEngine(patternActor: Actor, imageActor: Actor) extends Engine 
 
   val explodeErode = false
 
-  private val binaryImageActor = new BinaryImageActor(imageActor, explodeErode)
+  private val binaryImageActor = BinaryImageActor(imageActor, explodeErode)
 
-  private val binaryPatternActor = new BinaryImageActor(patternActor, explodeErode)
+  private val binaryPatternActor = BinaryImageActor(patternActor, explodeErode)
 
   private val stitchActor = StitchImageActor(patternActor,imageActor)
 

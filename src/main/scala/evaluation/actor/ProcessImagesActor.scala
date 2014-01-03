@@ -21,7 +21,7 @@ class ProcessImagesActor(imageActors: IndexedSeq[Actor], imageProcessor: (Indexe
 
   private val self = this
 
-  var _lastImage: LastImage = null;
+  private var _lastImage: LastImage = null;
 
   private var _pendingRequests = List[GetImage]()
 
