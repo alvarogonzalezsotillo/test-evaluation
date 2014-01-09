@@ -16,15 +16,18 @@ import java.io.File
  */
 object StitchLayoutSample extends App{
 
-  val layout = TestLayout(135,4)
+  val layout = TestLayout(135,4, true)
 
 
   val pattern = TestLayoutToImg(layout)
 
 
-  val image = ImageIO.read( new File("./src/testimages/layout/msword-135.jpg"))
+  val image = ImageIO.read( new File("./src/testimages/layout/msword-135-ii.jpg"))
   val ia = new FixedImageActor(Img(image))
   val sia = StitchImageActor(new FixedImageActor( Img(pattern)),ia)
+  //val sia = StitchImageActor(ia,new FixedImageActor( Img(pattern)))
+
+
   val panel = ImagePanel(sia, "Stitched")
 
   val frame = new JFrame("Stitch layout image sample")

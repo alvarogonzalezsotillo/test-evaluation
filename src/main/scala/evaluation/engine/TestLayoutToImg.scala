@@ -5,6 +5,7 @@ import java.awt.geom.AffineTransform
 import java.awt.{Color, Graphics2D}
 import evaluation.Log
 import evaluation.engine.Geom.Rect
+import scala.collection.immutable
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,10 +43,17 @@ object TestLayoutToImg {
       drawer(x,y,w,h)
     }
 
-    layout.questionRects.map( drawRect(_, g2d.fillRect) )
-    layout.answerOptionHeaderRects.flatten.map( drawRect(_, g2d.fillRect) )
+    //layout.questionRects.map( drawRect(_, g2d.fillRect) )
+    //layout.answerOptionHeaderRects.flatten.map( drawRect(_, g2d.fillRect) )
     //layout.answerOptionRects.flatten.map( drawRect(_, (x,y,w,h) => g2d.drawRoundRect(x,y,w,h,5,5) ) )
 
+    def combine( rects: Seq[Rect]) = rects.foldLeft(rects.head)( (a, b) => a+b)
+
+    layout.columns.map(layout.questionColumnsRect).foreach( rects =>{
+      drawRect( combine(rects), g2d.fillRect )
+    })
+
+    drawRect( combine(layout.answerOptionHeaderRects.flatten), g2d.fillRect )
 
     g2d.dispose()
     ret

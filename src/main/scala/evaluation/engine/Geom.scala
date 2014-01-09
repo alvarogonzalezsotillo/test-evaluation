@@ -26,6 +26,15 @@ object Geom {
 
     def -(p: Point) = this + p * -1
 
+    def +(r: Rect) = {
+      val le = left min r.left
+      val to = top min r.top
+      val ri = right max r.right
+      val bo = bottom max r.bottom
+
+      Rect( le, to, ri - le, bo - to )
+    }
+
     def grow(inc: Coord) = Rect(left - inc, top - inc, width + 2 * inc, height + 2 * inc)
 
     lazy val bottom = top + height

@@ -9,12 +9,21 @@ package evaluation.engine
  */
 
 import Geom._
+import TestLayout.choose
 
 object TestLayout {
-  def apply(questionNumber: Int, optionNumber: Int) = new TestLayout(questionNumber, optionNumber)
+  def apply(questionNumber: Int, optionNumber: Int, includeMargin: Boolean = false) = new TestLayout(questionNumber, optionNumber)
+
+  implicit class choose( b: Boolean ) extends AnyRef{
+    def ->[T]( options : Pair[T,T] ) = if( b ) options._1 else options._2
+    def then[T]( option: T ) = if( b ) option else 0.asInstanceOf[T]
+  }
+
 }
 
-class TestLayout(val questionNumber: Int, val optionNumber: Int) {
+
+
+class TestLayout(val questionNumber: Int, val optionNumber: Int, includeMargin: Boolean = false){
 
   val questionsPerLine = 5
 
@@ -28,6 +37,10 @@ class TestLayout(val questionNumber: Int, val optionNumber: Int) {
   val answerColumnWidth = 15 * factor
 
 
+  val questions = (0 until questionNumber)
+  val columns = (0 until questionsPerLine)
+  val rows = (0 until questionNumber/questionsPerLine)
+
   lazy val questionWidth = questionNumberColumnWidth + answerColumnWidth * optionNumber
 
 
@@ -38,20 +51,21 @@ class TestLayout(val questionNumber: Int, val optionNumber: Int) {
     val column = n % questionsPerLine
     val xOffset = questionWidth * column
     val yOffset = (lineSpacing + boxHeight) * line
-    Rect(xOffset, yOffset, questionNumberWidth, boxHeight)
+    Rect(xOffset, yOffset, questionNumberWidth + (includeMargin then lineSpacing), boxHeight + (includeMargin then lineSpacing))
   }
 
-  def answerOptionRect(n: Int, option: Int) = {
+
+  def answerOptionRect(n: Int, option: Int ) = {
     assert(option < optionNumber)
     assert(option >= 0)
     val qr = questionRect(n)
     val xOffset = answerColumnWidth * option + questionNumberColumnWidth
-    Rect(qr.left + xOffset, qr.top, answerWidth, boxHeight)
+    Rect(qr.left + xOffset, qr.top, answerWidth + (includeMargin then lineSpacing), boxHeight + (includeMargin then lineSpacing))
   }
 
-  private def answerOptionHeaderRect(column: Int, option: Int) = {
+  private def answerOptionHeaderRect(column: Int, option: Int ) = {
     val ar = answerOptionRect(column, option)
-    Rect(ar.left, ar.top - lineSpacing - boxHeight, answerWidth, boxHeight)
+    Rect(ar.left, ar.top - lineSpacing - boxHeight, answerWidth + (includeMargin then lineSpacing), boxHeight + (includeMargin then lineSpacing))
   }
 
   lazy val questionRects = (0 until questionNumber).map(questionRect(_))
@@ -63,6 +77,13 @@ class TestLayout(val questionNumber: Int, val optionNumber: Int) {
   )
 
   lazy val allRects = questionRects ++ answerOptionRects.flatten ++ answerOptionHeaderRects.flatten
+
+  def columnOfQuestion( n: Int ) = n % questionsPerLine
+
+  lazy val questionColumnsRect = {
+    val columns = questions.groupBy(columnOfQuestion)
+    (n:Int) => columns(n).map( questionRect )
+  }
 
   lazy val boundingBox = {
     val top = allRects.map(_.top).min
