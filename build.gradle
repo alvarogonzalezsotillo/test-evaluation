@@ -43,3 +43,8 @@ task wrapper(type: Wrapper) {
 
 mainClassName = "samples.StepsProgressSample"
 
+task runSample(type: JavaExec, dependsOn:[classes]) {
+    main = 'samples.StepsProgressSample'
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.samples.runtimeClasspath
+}
