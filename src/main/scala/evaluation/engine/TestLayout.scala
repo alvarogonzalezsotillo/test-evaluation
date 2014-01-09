@@ -15,8 +15,8 @@ object TestLayout {
   def apply(questionNumber: Int, optionNumber: Int, includeMargin: Boolean = false) = new TestLayout(questionNumber, optionNumber)
 
   implicit class choose( b: Boolean ) extends AnyRef{
-    def ->[T]( options : Pair[T,T] ) = if( b ) options._1 else options._2
-    def then[T]( option: T ) = if( b ) option else 0.asInstanceOf[T]
+    def -->[T]( options : Pair[T,T] ) = if( b ) options._1 else options._2
+    def -->[T]( option: T ) = if( b ) option else 0.asInstanceOf[T]
   }
 
 }
@@ -51,7 +51,7 @@ class TestLayout(val questionNumber: Int, val optionNumber: Int, includeMargin: 
     val column = n % questionsPerLine
     val xOffset = questionWidth * column
     val yOffset = (lineSpacing + boxHeight) * line
-    Rect(xOffset, yOffset, questionNumberWidth + (includeMargin then lineSpacing), boxHeight + (includeMargin then lineSpacing))
+    Rect(xOffset, yOffset, questionNumberWidth + (includeMargin --> lineSpacing), boxHeight + (includeMargin --> lineSpacing))
   }
 
 
@@ -60,12 +60,12 @@ class TestLayout(val questionNumber: Int, val optionNumber: Int, includeMargin: 
     assert(option >= 0)
     val qr = questionRect(n)
     val xOffset = answerColumnWidth * option + questionNumberColumnWidth
-    Rect(qr.left + xOffset, qr.top, answerWidth + (includeMargin then lineSpacing), boxHeight + (includeMargin then lineSpacing))
+    Rect(qr.left + xOffset, qr.top, answerWidth + (includeMargin --> lineSpacing), boxHeight + (includeMargin --> lineSpacing))
   }
 
   private def answerOptionHeaderRect(column: Int, option: Int ) = {
     val ar = answerOptionRect(column, option)
-    Rect(ar.left, ar.top - lineSpacing - boxHeight, answerWidth + (includeMargin then lineSpacing), boxHeight + (includeMargin then lineSpacing))
+    Rect(ar.left, ar.top - lineSpacing - boxHeight, answerWidth + (includeMargin --> lineSpacing), boxHeight + (includeMargin --> lineSpacing))
   }
 
   lazy val questionRects = (0 until questionNumber).map(questionRect(_))

@@ -10,17 +10,8 @@ repositories {
 }
 
 sourceSets {
-  main
   samples{
-    java {
-       compileClasspath += main.output
-       runtimeClasspath += main.output
-    }
-    scala{
-       compileClasspath += main.output
-       runtimeClasspath += main.output
-    }
-    
+      compileClasspath += sourceSets.main.runtimeClasspath
   }
 }
 
@@ -50,5 +41,5 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.6'
 }
 
-mainClassName = "scala.sample.CaptureImageAndPanelSample"
+mainClassName = "samples.StepsProgressSample"
 

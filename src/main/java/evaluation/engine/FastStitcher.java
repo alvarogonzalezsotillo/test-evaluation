@@ -22,7 +22,6 @@ import boofcv.struct.geo.AssociatedPair;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.image.MultiSpectral;
-import evaluation.Log;
 import georegression.struct.homo.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Point2D_I32;
@@ -230,7 +229,7 @@ public class FastStitcher extends Stitcher{
             return ret;
         }
         catch (IllegalStateException e) {
-            Log.apply("Problem stitching image: " + e.toString());
+            System.err.println("Problem stitching image: " + e.toString());
             return null;
         }
     }
