@@ -16,15 +16,10 @@ import java.io.File
  */
 object StepsProgressSample extends App{
 
-
   val layout = TestLayout(135,4)
-
-
 
   val pattern = TestLayoutToImg(layout)
   //val pattern = ImageIO.read( new File("./src/testimages/stitch/borders-00.jpg"))
-
-
 
   val frame = new JFrame("Test continuous Layout sample")
   frame add EngineStepsPane( BinaryStitchEngine(Img(pattern)) )
@@ -33,6 +28,7 @@ object StepsProgressSample extends App{
 
   frame.setSize(200, 200)
   frame.setVisible(true)
+  frame.requestFocus();
 
 
 }

@@ -1,9 +1,8 @@
 package evaluation.gui
 
-import javax.swing.{Timer, JPanel}
+import javax.swing.JPanel
 import java.awt.{Dimension, GridLayout, BorderLayout}
-import java.awt.Component
-import java.awt.event.{ActionEvent, ActionListener, MouseEvent, MouseAdapter}
+import java.awt.event.{MouseEvent, MouseAdapter}
 import evaluation.engine.Engine
 import evaluation.Log
 
@@ -14,43 +13,46 @@ import evaluation.Log
  * Time: 17:33
  * To change this template use File | Settings | File Templates.
  */
-class EngineStepsPane( images: Seq[ImagePanel] ) extends JPanel{
+class EngineStepsPane(images: Seq[ImagePanel]) extends JPanel {
 
   setLayout(new BorderLayout)
 
-  object proxy extends ImagePanel{
-    override def image() = if(_componentClicked != null) _componentClicked.image else null
-    override def label() = if(_componentClicked != null) _componentClicked.label else "Click on any image panel"
-    new Timer(100, new ActionListener(){
-      def actionPerformed(e: ActionEvent){
-        proxy.repaint()
-      }
-    }).start()
+  object proxy extends ImagePanel {
+    override def image() = _componentClicked.image
+
+    override def label() = _componentClicked.label
   }
 
-  var _componentClicked : ImagePanel = null
+  private val repaintListener = () => proxy.repaint()
+
+  private var _componentClicked: ImagePanel = images.last
+  _componentClicked + repaintListener
 
   private val imagesPanel = new JPanel
   add(imagesPanel, BorderLayout.NORTH)
-  add( proxy, BorderLayout.CENTER )
+  add(proxy, BorderLayout.CENTER)
 
   imagesPanel.setLayout(new GridLayout(1, images.size))
-  images.foreach( imagesPanel.add(_) )
+  images.foreach(imagesPanel.add(_))
 
-  images.foreach( _.addMouseListener( new MouseAdapter(){
-    override def mouseClicked(e : MouseEvent){
+  private val mouseAdapter = new MouseAdapter() {
+    override def mouseClicked(e: MouseEvent) {
+      _componentClicked - repaintListener
       _componentClicked = e.getComponent.asInstanceOf[ImagePanel]
-      Log( s"Clicked on ${_componentClicked}")
-      proxy.repaint()
+      _componentClicked + repaintListener
+      repaintListener()
+      Log(s"Clicked on ${_componentClicked}")
     }
-  }))
+  }
 
-  imagesPanel.setPreferredSize( new Dimension(200,200) )
+  images.foreach(_.addMouseListener(mouseAdapter))
+
+  imagesPanel.setPreferredSize(new Dimension(200, 200))
 }
 
-object EngineStepsPane{
-  def apply( e: Engine ) = {
-    val imagePanels = e.imageActors.map( a => ImagePanel(a, a.getClass.getName) )
+object EngineStepsPane {
+  def apply(e: Engine) = {
+    val imagePanels = e.imageActors.map(a => ImagePanel(a, a.getClass.getName))
     new EngineStepsPane(imagePanels)
   }
 }

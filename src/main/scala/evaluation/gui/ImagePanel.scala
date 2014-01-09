@@ -34,15 +34,18 @@ object ImagePanel {
 }
 
 class ImagePanel() extends JPanel {
-
-
   private var _image: Img = null
   private var _label = "Change label"
+
+  type Listener = () => Unit
+
+  private var _listeners = Set[Listener]()
 
   def image: Img = _image
 
   def image_=(n: Img) {
     _image = n
+    _listeners.foreach( _() )
     repaint()
   }
 
@@ -50,8 +53,15 @@ class ImagePanel() extends JPanel {
 
   def label_=(l: String) {
     _label = l
+    _listeners.foreach( _() )
     repaint()
   }
+
+  def addListener( l: Listener ) = _listeners = _listeners + l
+  def removeListener(l: Listener ) = _listeners = _listeners - l
+
+  def +( l: Listener ) = addListener(l)
+  def -( l: Listener ) = removeListener(l)
 
 
   def img() = _image

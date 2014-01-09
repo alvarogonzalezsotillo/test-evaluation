@@ -41,7 +41,6 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.6'
 }
 
-mainClassName = "samples.StepsProgressSample"
 
 task runSample(type: JavaExec, dependsOn:[classes]) {
     main = 'samples.StepsProgressSample'
