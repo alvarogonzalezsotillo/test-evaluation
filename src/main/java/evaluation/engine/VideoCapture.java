@@ -3,6 +3,7 @@ package evaluation.engine;
 import com.github.sarxos.webcam.Webcam;
 
 import javax.swing.*;
+import java.util.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -23,6 +24,16 @@ public class VideoCapture implements Closeable{
 
     public interface ImageCapturedListener {
         void imageCaptured(BufferedImage i);
+    }
+    
+    private Dimension _dimension;
+    
+    public VideoCapture(){
+        _dimension = null;
+    }
+    
+    public VideoCapture( int w, int h ){
+        _dimension = new Dimension(w,h);
     }
 
     public  VideoCaptureThread startVideoCapture(ImageCapturedListener l){
@@ -66,7 +77,19 @@ public class VideoCapture implements Closeable{
     public Webcam webcam(){
         if( _webcam == null ){
             _webcam = Webcam.getDefault();
-            _webcam.setViewSize(new Dimension(1024, 768));
+            Dimension d = _dimension;
+            if( d == null ){
+                Dimension[] dimensions = _webcam.getViewSizes();
+                Arrays.sort( dimensions, new Comparator<Dimension>(){
+                    @Override
+                    public int compare( Dimension d1, Dimension d2){
+                        return d2.height * d2.width - d1.height * d1.width;
+                    }
+                });
+                System.out.println( "******" + Arrays.asList(dimensions) );
+                d = dimensions[0];
+            }
+            _webcam.setViewSize(d);
             _webcam.open();
         }
         return _webcam;
