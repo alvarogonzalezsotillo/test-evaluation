@@ -28,7 +28,7 @@ class CaptureImageActor extends Actor {
   val _minMillisBetweenFrames = 0
   val self = this
 
-  private val vc = new VideoCapture()
+  private lazy val vc = new VideoCapture()
   private val vct = vc.startVideoCapture(new ImageCapturedListener {
     def imageCaptured(i: Img.Visualizable) {
       //Log( "Image captured" )

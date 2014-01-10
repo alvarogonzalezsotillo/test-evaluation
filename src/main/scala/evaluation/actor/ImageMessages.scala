@@ -21,9 +21,15 @@ object ImageMessages {
   type Time = Long
 
   val noTime : Time = -1
+  
+  class Msg( val time: Time )
+  
+  object Msg{
+    def unapply( msg: Msg ) = Some(msg.time)
+  }
 
-  case class GetImage(requester: Actor, lastTime: Time )
+  case class GetImage(requester: Actor, lastTime: Time ) extends Msg(lastTime)
 
-  case class LastImage(sender: Actor, image: Img, time: Time)
+  case class LastImage(sender: Actor, image: Img, generatedTime: Time) extends Msg(generatedTime)
 
 }

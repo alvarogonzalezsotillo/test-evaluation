@@ -21,7 +21,8 @@ object StepsProgressSample extends App{
   //val pattern = TestLayoutToImg(layout)
   //val pattern = ImageIO.read( new File("./src/testimages/stitch/borders-00.jpg"))
   //val pattern = ImageIO.read( new File("./src/testimages/layout/msword-135-ii.jpg"))
-  val pattern = ImageIO.read( new File("./src/testimages/layout/examinator.jpg"))
+  //val pattern = ImageIO.read( new File("./src/testimages/layout/examinator.jpg"))
+  val pattern = ImageIO.read( new File("./src/testimages/stitch/corner-three-empty-holes.JPG"))
 
   val frame = new JFrame("Test continuous Layout sample")
   frame add EngineStepsPane( BinaryStitchEngine(Img(pattern)) )
