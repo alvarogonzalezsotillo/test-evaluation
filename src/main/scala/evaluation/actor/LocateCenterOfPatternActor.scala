@@ -16,8 +16,7 @@ import evaluation.Log
 
 object LocateCenterOfPatternActor{
 
-  def apply(stitchImageActor: stitchImageActor) = {
-
+  def apply(stitchImageActor: Actor) = {
 
     def paintCenterOfPattern( images: IndexedSeq[Img]) : Img = {
       val img = images(0)
@@ -25,9 +24,12 @@ object LocateCenterOfPatternActor{
         null
       }
       else img match{
-        case ImgAndPatter(v,vp,h) if( v != null  && vp != null && h != null ) =>
-          Img(v)
+        case ImgAndPattern(v,vp,h) if( v != null  && vp != null && h != null ) =>
           Log( "Hay que pintar el punto del centro de acuerdo a la homografia" )
+          Img(v)
+        case Img(v) =>
+          Log( "No hay homografía que pintar" )
+          null
       }
       
     }
