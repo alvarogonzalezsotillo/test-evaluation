@@ -4,20 +4,25 @@ import boofcv.core.image.ConvertBufferedImage
 import boofcv.struct.image.ImageFloat32
 import boofcv.struct.image.MultiSpectral
 
+import georegression.struct.homo.Homography2D_F64
+
 import java.awt.image.BufferedImage
 import evaluation.engine.Img.Visualizable
+import evaluation.engine.Img.Homography
 
-class Img{
-  private var _visualizable: Visualizable = null
-  lazy val visualizable = _visualizable
-}
+
+
+class Img(val visualizable: Visualizable)
+
+
+
 
 object Img{
   type Visualizable = BufferedImage
-
-  def apply(v:Visualizable) = {
-    val ret = new Img
-    ret._visualizable = v
-    ret
-  }
+  type Homography = Homography2D_F64
+  
+  def apply(visualizable: Visualizable) = new Img(visualizable)
+  def unapply( img: Img ) = new Some( img.visualizable )
 }
+
+case class ImgAndPattern( override val visualizable: Visualizable, pattern: Visualizable, homography: Homography ) extends Img(visualizable)

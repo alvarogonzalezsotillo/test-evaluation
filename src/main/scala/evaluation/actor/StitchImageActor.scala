@@ -1,6 +1,6 @@
 package evaluation.actor
 
-import evaluation.engine.{Img, Stitcher}
+import evaluation.engine.{Img, ImgAndPattern, Stitcher}
 import evaluation.actor.ImageMessages.{GetImage, LastImage, Time}
 import scala.actors.Actor
 import evaluation.Log
@@ -33,15 +33,16 @@ object StitchImageActor{
       }
 
       def stitchImages( images: IndexedSeq[Img] ) = {
+        val pattern = images(0)
         if( images.exists(_==null) ){
           null
         }
         else if( images.exists( _.visualizable == null ) ){
           null
         }
-        else if( stitcher(images(0)) != null ){
-          val ret = stitcher(images(0)).stitch( images(1).visualizable )
-          Img(ret)
+        else if( stitcher(pattern) != null ){
+          val ret = stitcher(pattern).stitch( images(1).visualizable )
+          ImgAndPattern(ret.image, pattern.visualizable, ret.homography )
         }
         else{
           null

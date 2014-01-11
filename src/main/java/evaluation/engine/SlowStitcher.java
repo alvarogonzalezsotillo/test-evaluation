@@ -208,11 +208,11 @@ public class SlowStitcher extends Stitcher{
         return new Point2D_I32((int) result.x, (int) result.y);
     }
 
-    public BufferedImage stitch(BufferedImage image) {
+    public StitchResult stitch(BufferedImage image) {
         try {
             Homography2D_F64 H = stitchHomography(_pattern, image, ImageFloat32.class);
             BufferedImage ret = renderStitching(_pattern, image, H);
-            return ret;
+            return new StitchResult(ret,H);
         }
         catch (IllegalStateException e) {
             System.err.println( "Problem stitching image: " + e.toString() );
