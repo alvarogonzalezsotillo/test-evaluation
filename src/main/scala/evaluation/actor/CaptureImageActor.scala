@@ -1,7 +1,7 @@
 package evaluation.actor
 
 import scala.actors.Actor
-import evaluation.engine.{Img, VideoCapture}
+import evaluation.engine.{Image, VideoCapture}
 import VideoCapture.ImageCapturedListener
 import evaluation.Log
 import evaluation.actor.ImageMessages.{Time, GetImage, LastImage}
@@ -15,7 +15,7 @@ import evaluation.actor.ImageMessages.{Time, GetImage, LastImage}
  */
 class CaptureImageActor extends Actor {
 
-  case class ImageCaptured(image: Img, time: Time)
+  case class ImageCaptured(image: Image, time: Time)
 
   case class Stop(requester: Actor)
 
@@ -30,9 +30,9 @@ class CaptureImageActor extends Actor {
 
   private lazy val vc = new VideoCapture()
   private val vct = vc.startVideoCapture(new ImageCapturedListener {
-    def imageCaptured(i: Img.Visualizable) {
+    def imageCaptured(i: Image.Visualizable) {
       //Log( "Image captured" )
-      self ! ImageCaptured(Img(i), System.currentTimeMillis)
+      self ! ImageCaptured(Image(i), System.currentTimeMillis)
       Thread.sleep(_minMillisBetweenFrames)
     }
   })

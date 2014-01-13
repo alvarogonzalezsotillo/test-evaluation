@@ -5,7 +5,7 @@ import java.awt.{Color, RenderingHints, Graphics2D, Graphics}
 import java.awt.RenderingHints._
 import scala.actors.Actor
 import evaluation.actor.ImagePanelActor
-import evaluation.engine.Img
+import evaluation.engine._
 import java.awt.geom.AffineTransform
 
 /**
@@ -64,8 +64,6 @@ class ImagePanel() extends JPanel {
   def -( l: Listener ) = removeListener(l)
 
 
-  def img() = _image
-
   private val hints = List(
     (KEY_ANTIALIASING, VALUE_ANTIALIAS_ON),
     (KEY_RENDERING, VALUE_RENDER_QUALITY),
@@ -77,16 +75,25 @@ class ImagePanel() extends JPanel {
 
 
     def paintImage {
-      if (image != null && image.visualizable != null) {
-        val g2d = g.create().asInstanceOf[Graphics2D]
-        hints.foreach(p => g2d.setRenderingHint(p._1, p._2))
-        val img = image.visualizable
-        val af = AffineTransform.getScaleInstance(size.getWidth / img.getWidth, size.getHeight / img.getHeight)
-        g2d.transform(af)
-        g2d.drawImage(img, 0, 0, null)
-        g2d.dispose()
+      image match{
+        case Image(v) =>
+          val g2d = g.create().asInstanceOf[Graphics2D]
+          hints.foreach(p => g2d.setRenderingHint(p._1, p._2))
+          val af = AffineTransform.getScaleInstance(size.getWidth / v.getWidth, size.getHeight / v.getHeight)
+          g2d.transform(af)
+          g2d.drawImage(v, 0, 0, null)
+          g2d.dispose()
+        case _ =>  
+          g.setColor(Color.BLACK)
+          val w = size.getWidth.asInstanceOf[Int]
+          val h = size.getHeight.asInstanceOf[Int]
+          g.fillRect(0,0,w,h)
+          g.setColor(Color.WHITE)
+          g.drawLine( 0,0,w,h)
+          g.drawLine( w,0,0,h)
       }
     }
+    
     def paintLabel {
       val margin = 5
       g.setColor(Color.WHITE)

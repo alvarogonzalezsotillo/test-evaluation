@@ -42,6 +42,10 @@ public abstract class Stitcher {
         //return new SlowStitcher(pattern);
         return new FastStitcher(pattern);
     }
+    
+    public BufferedImage pattern(){
+      return _pattern;
+    }
 
     public abstract StitchResult stitch(BufferedImage image);
 }

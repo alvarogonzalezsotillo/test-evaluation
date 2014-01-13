@@ -1,7 +1,7 @@
 package evaluation.actor
 
-import evaluation.engine.{Img, ImgAndPattern, Stitcher}
-import evaluation.actor.ImageMessages.{GetImage, LastImage, Time}
+import evaluation.engine._
+import evaluation.actor.ImageMessages._
 import scala.actors.Actor
 import evaluation.Log
 
@@ -18,20 +18,16 @@ object LocateCenterOfPatternActor{
 
   def apply(stitchImageActor: Actor) = {
 
-    def paintCenterOfPattern( images: IndexedSeq[Img]) : Img = {
-      val img = images(0)
-      if( img == null ){
-        null
-      }
-      else img match{
-        case ImgAndPattern(v,vp,h) if( v != null  && vp != null && h != null ) =>
-          Log( "Hay que pintar el punto del centro de acuerdo a la homografia" )
-          Img(v)
-        case Img(v) =>
-          Log( "No hay homografía que pintar" )
-          null
-      }
-      
+    def paintCenterOfPattern( images: IndexedSeq[Img]) = images(0) match{
+      case ImgAndPattern(v,vp,h) if( v != null  && vp != null && h != null ) =>
+        Log( "Hay que pintar el punto del centro de acuerdo a la homografia" )
+        Image(v)
+      case Image(v) =>
+        Log( "No hay homografía que pintar" )
+        NoImg
+      case NoImg =>
+        Log( "No hay imagen" )
+        NoImg
     }
 
     new ProcessImagesActor(IndexedSeq(stitchImageActor), paintCenterOfPattern )

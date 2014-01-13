@@ -7,16 +7,9 @@ import evaluation.Log
 import evaluation.engine.Geom.Rect
 import scala.collection.immutable
 
-/**
- * Created with IntelliJ IDEA.
- * User: alvaro
- * Date: 29/12/13
- * Time: 23:43
- * To change this template use File | Settings | File Templates.
- */
 object TestLayoutToImg {
 
-  def apply(layout: TestLayout): Img.Visualizable = {
+  def apply(layout: TestLayout): Image.Visualizable = {
     val boundingBox = layout.boundingBox
     val margin = boundingBox.width * 0.2f
     val size = boundingBox.grow(margin)
@@ -59,7 +52,7 @@ object TestLayoutToImg {
     ret
   }
 
-  def apply(layout: TestLayout, visualizable: Img.Visualizable ){
+  def apply(layout: TestLayout, visualizable: Image.Visualizable ){
 
   }
 }
