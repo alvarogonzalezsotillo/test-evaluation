@@ -18,7 +18,7 @@ import evaluation.gui._
 object MultipleImagesPaneSample extends App{
 
   val img = ImageIO.read( new File("./src/testimages/stitch/corner-three-empty-holes.JPG"))
-  MultipleImagesPane.show( Cropper( Image(img), 2) )
+  MultipleImagesPane.show( Cropper( Image(img), 3) )
   
   val f = new JFrame("Original")
   f add ImagePanel( Image(img), "Original" )

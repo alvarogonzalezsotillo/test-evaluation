@@ -8,18 +8,18 @@ import evaluation.Log
 import scala.collection._
 
 
-class MultipleImagesPane(images: Seq[Img]) extends JPanel {
+class MultipleImagesPane(images: Seq[Seq[Img]]) extends JPanel {
 
-  val rows = Iterator.from(1).find( v => v*v > images.size ).get - 1
-  val columns = images.size / rows
+  val rows = images.size
+  val columns = images(0).size
 
   setLayout( new GridLayout(columns,rows) )
   
-  images.foreach( i => add( ImagePanel(i,"cropped") ) )
+  images.flatten.foreach( i => add( ImagePanel(i,"cropped") ) )
 }
 
 object MultipleImagesPane{
-  def show( images: Seq[Img] ) = {
+  def show( images: Seq[Seq[Img]] ) = {
     val p = new MultipleImagesPane(images)
     val f = new JFrame( "Images" )
     f add p
