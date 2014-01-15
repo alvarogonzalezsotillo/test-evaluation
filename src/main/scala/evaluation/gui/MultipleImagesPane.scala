@@ -10,7 +10,7 @@ import scala.collection._
 
 class MultipleImagesPane(images: Seq[Img]) extends JPanel {
 
-  val rows = Iterator.from(1).find( v => v*v > images.size ).get
+  val rows = Iterator.from(1).find( v => v*v > images.size ).get - 1
   val columns = images.size / rows
 
   setLayout( new GridLayout(columns,rows) )

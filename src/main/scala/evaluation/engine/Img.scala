@@ -45,8 +45,8 @@ class VisualizableOps( v: Visualizable ){
     val dy1 = 0
     val dx2 = r.width.asInstanceOf[Int]
     val dy2 = r.height.asInstanceOf[Int]
-    val sx1 = r.top.asInstanceOf[Int]
-    val sy1 = r.left.asInstanceOf[Int]
+    val sx1 = r.left.asInstanceOf[Int]
+    val sy1 = r.top.asInstanceOf[Int]
     val sx2 = r.right.asInstanceOf[Int]
     val sy2 = r.bottom.asInstanceOf[Int]
     val ret = new BufferedImage( dx2, dy2, BufferedImage.TYPE_INT_RGB )

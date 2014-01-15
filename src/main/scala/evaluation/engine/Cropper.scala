@@ -20,7 +20,7 @@ object Cropper{
     val w = vw/factor
     val h = vh/factor
     
-    for( c <- 0 to factor*2-1 ; r <- 0 to factor*2-1 ) yield{
+    for( c <- 0 until factor*2-1 ; r <- 0 until factor*2-1 ) yield{
       val x = c * w/2
       val y = r * h/2
       val i = v.crop( Rect(x,y,w,h) )
