@@ -13,20 +13,24 @@ import evaluation.Log
  */
 class BinaryStitchEngine(patternActor: Actor, imageActor: Actor) extends Engine {
 
-  val explodeErode = false
+  val explodeErode = true
 
-  //private val binaryImageActor = BinaryImageActor(imageActor, explodeErode)
+  private val binaryImageActor = BinaryImageActor(imageActor, explodeErode)
 
-  //private val binaryPatternActor = BinaryImageActor(patternActor, explodeErode)
+  private val binaryPatternActor = BinaryImageActor(patternActor, explodeErode)
 
-  //private val stitchActor_binary = StitchImageActor(binaryPatternActor,binaryImageActor)
+  private val stitchActor_binary = StitchImageActor(binaryPatternActor,binaryImageActor)
   
-  private val stitchActor = StitchImageActor(patternActor,imageActor)
+  //private val stitchActor = StitchImageActor(patternActor,imageActor)
+  
+  private val showStitchActor = LocateCenterOfPatternActor(stitchActor_binary)
 
 
-  val imageActors = IndexedSeq(patternActor, imageActor, stitchActor)
+  //val imageActors = IndexedSeq(patternActor, imageActor, stitchActor,showStitchActor)
+  val imageActors = IndexedSeq(patternActor, binaryImageActor, stitchActor_binary, showStitchActor)
 }
 
 object BinaryStitchEngine {
   def apply(pattern: Img) = new BinaryStitchEngine(new FixedImageActor(pattern), new CaptureImageActor)
+  def apply(pattern: Img, imageActor: Actor) = new BinaryStitchEngine(new FixedImageActor(pattern), imageActor)
 }

@@ -28,6 +28,7 @@ object StitchImageActor{
           case Image(v) if v != _lastVisualizable =>
             _stitcher = Stitcher.create(v)
             _lastVisualizable = v
+          case _ =>  
         }
         _stitcher
       }
@@ -36,9 +37,9 @@ object StitchImageActor{
         val s = stitcher(images(0))
         images(1) match{
           case Image(i) if s != null =>
-            val ret = s.stitch( i )
+            val ret = s.stitch( i, false )
             if( ret != null ){
-              ImgAndPattern(ret.image, s.pattern, ret.homography )
+              ImgAndPattern(i, s.pattern, ret.homography )
             }
             else{
               NoImg

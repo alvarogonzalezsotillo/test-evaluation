@@ -12,3 +12,8 @@ import scala.actors.Actor
 trait Engine {
   def imageActors : IndexedSeq[Actor]
 }
+
+object Engine{
+  def apply(pattern: Img) = StitchEngine(pattern)
+  def apply(pattern: Img, imageActor: Actor) = StitchEngine(pattern, imageActor)
+}
