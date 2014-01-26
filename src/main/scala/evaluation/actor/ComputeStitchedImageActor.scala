@@ -16,14 +16,13 @@ import java.awt.Point
  */
 
 
-object LocateCenterOfPatternActor{
+object ComputeStitchedImageActor{
 
   def apply(stitchImageActor: Actor) = {
 
-    def paintCenterOfPattern( images: IndexedSeq[Img]) = images(0) match{
+    def computeStitchedImage( images: IndexedSeq[Img]) = images(0) match{
       case ImgAndPattern(vo,vp,h) if( vo != null  && vp != null && h != null ) =>
-        val tPoint = Stitcher.transformPoint(vp.getWidth/2,vp.getHeight/2,h)
-        val newV = vo.drawMark(tPoint)
+        val newV = Stitcher.renderStitching(vp,vo,h)
         Image(newV)
         
       case Image(v) =>
@@ -35,6 +34,6 @@ object LocateCenterOfPatternActor{
         NoImg
     }
 
-    new ProcessImagesActor(IndexedSeq(stitchImageActor), paintCenterOfPattern )
+    new ProcessImagesActor(IndexedSeq(stitchImageActor), computeStitchedImage )
   }
 }

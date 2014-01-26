@@ -44,6 +44,7 @@ task wrapper(type: Wrapper) {
 
 task runSample(type: JavaExec, dependsOn:[classes]) {
     main = 'samples.StepsProgressSample'
+    //main = 'samples.MultipleImagesPaneSample'
     classpath = sourceSets.main.runtimeClasspath
     classpath += sourceSets.samples.runtimeClasspath
 }

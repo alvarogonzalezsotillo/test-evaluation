@@ -16,23 +16,28 @@ import java.io.File
  */
 object StepsProgressSample extends App{
 
-  val layout = TestLayout(135,4)
+  val patterns = Seq(
+    //"corner-three-empty-holes",
+    "corner-centralempty-hole"
+    //"corner-two-empty-symmetric-holes",
+    //"corner-two-empty-asymmetric-holes"
+  )
 
-  //val pattern = TestLayoutToImg(layout)
-  //val pattern = ImageIO.read( new File("./src/testimages/stitch/borders-00.jpg"))
-  //val pattern = ImageIO.read( new File("./src/testimages/layout/msword-135-ii.jpg"))
-  //val pattern = ImageIO.read( new File("./src/testimages/layout/examinator.jpg"))
-  //val pattern = ImageIO.read( new File("./src/testimages/layout/corner.jpg"))
-  val pattern = ImageIO.read( new File("./src/testimages/stitch/corner-three-empty-holes.JPG"))
+  val webcamActor = new CaptureImageActor
 
-  val frame = new JFrame("Test continuous Layout sample")
-  frame add EngineStepsPane( BinaryStitchEngine(Img(pattern)) )
+  for( p <- patterns ){
 
-  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+    val pattern = ImageIO.read( new File(s"./src/testimages/stitch/$p.jpg"))
 
-  frame.setSize(200, 200)
-  frame.setVisible(true)
-  frame.requestFocus();
+    val frame = new JFrame(p)
+    frame add EngineStepsPane( Engine(Image(pattern), webcamActor ) )
+
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+
+    frame.setSize(200, 200)
+    frame.setVisible(true)
+    frame.requestFocus();
+  }
 
 
 }

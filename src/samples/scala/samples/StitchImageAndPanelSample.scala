@@ -5,7 +5,7 @@ import javax.imageio.ImageIO
 import java.io.File
 import evaluation.actor.{StitchImageActor, FixedImageActor}
 import evaluation.gui.ImagePanel
-import evaluation.engine.Img
+import evaluation.engine._
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,9 +17,9 @@ import evaluation.engine.Img
 object StitchImageAndPanelSample extends App{
 
   val image = ImageIO.read( new File("./src/testimages/stitch/borders-05.jpg"))
-  val ia = new FixedImageActor(Img(image))
+  val ia = new FixedImageActor(Image(image))
   val pattern = ImageIO.read( new File("./src/testimages/stitch/borders-00.jpg"))
-  val sia = StitchImageActor(new FixedImageActor(Img(pattern)),ia)
+  val sia = StitchImageActor(new FixedImageActor(Image(pattern)),ia)
   val panel = ImagePanel(sia, "Stitched")
 
   val frame = new JFrame("Stitch image sample")

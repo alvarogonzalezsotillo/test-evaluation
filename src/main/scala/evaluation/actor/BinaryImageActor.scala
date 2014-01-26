@@ -1,7 +1,7 @@
 package evaluation.actor
 
 import scala.actors.Actor
-import evaluation.engine.{Img, BinaryImage}
+import evaluation.engine.{Img, Image, NoImg, BinaryImage}
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,13 +13,9 @@ import evaluation.engine.{Img, BinaryImage}
 
 object BinaryImageActor {
 
-  def binarizer(erodeAndDilate: Boolean)(images: IndexedSeq[Img]) = {
-    if (images(0) != null && images(0).visualizable != null) {
-      Img(BinaryImage.toBinaryimage(images(0).visualizable, erodeAndDilate))
-    }
-    else {
-      null
-    }
+  def binarizer(erodeAndDilate: Boolean)(images: IndexedSeq[Img]) = images(0) match{
+    case Image(v) => Image(BinaryImage.toBinaryimage(v, erodeAndDilate))
+    case _ => NoImg
   }
 
   def apply(imageActor: Actor, erodeAndDilate: Boolean = true) = {
