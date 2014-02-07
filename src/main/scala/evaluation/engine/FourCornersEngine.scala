@@ -3,6 +3,8 @@ package evaluation.engine
 import evaluation.actor._
 import scala.actors.Actor
 import evaluation.Log
+import javax.imageio.ImageIO
+import java.io.File
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,21 +17,22 @@ class FourCornersEngine(imageActor: Actor) extends Engine {
 
   val patterns = Seq(
     "corner-three-empty-holes",
-    "corner-centralempty-hole"
+    "corner-centralempty-hole",
     "corner-two-empty-symmetric-holes",
     "corner-two-empty-asymmetric-holes"
   )
   
   val patternImgs = patterns.map( p => ImageIO.read( new File(s"./src/testimages/stitch/$p.jpg")) )
   
-  private val stitchActors = patternImgs.map( p => StitchImageActor(p,imageActor) )
+  val patternActors = patternImgs.map( i => new FixedImageActor(Image(i) ) )
   
-  private val showStitchActor = LocateCenterOfPatternActor(stitchActor)
+  private val stitchActors = patternActors.map( p => StitchImageActor( p,imageActor) )
+  
+  private val showStitchActor = LocateCenterOfPatternActor(stitchActors :_* )
 
-  val imageActors = IndexedSeq(patternActor, imageActor, stitchActor, showStitchActor)
+  val imageActors = IndexedSeq(imageActor, showStitchActor)
 }
 
-object StitchEngine {
-  def apply(pattern: Img) = new StitchEngine(new FixedImageActor(pattern), new CaptureImageActor)
-  def apply(pattern: Img, imageActor: Actor) = new StitchEngine(new FixedImageActor(pattern), imageActor)
+object FourCornersEngine {
+  def apply(imageActor: Actor) = new FourCornersEngine(imageActor)
 }

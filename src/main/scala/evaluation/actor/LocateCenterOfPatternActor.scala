@@ -18,23 +18,31 @@ import java.awt.Point
 
 object LocateCenterOfPatternActor{
 
-  def apply(stitchImageActor: Actor) = {
+  def apply(stitchImageActor: Actor*) = {
 
-    def paintCenterOfPattern( images: IndexedSeq[Img]) = images(0) match{
-      case ImgAndPattern(vo,vp,h) if( vo != null  && vp != null && h != null ) =>
-        val tPoint = Stitcher.transformPoint(vp.getWidth/2,vp.getHeight/2,h)
-        val newV = vo.drawMark(tPoint)
-        Image(newV)
+    def paintCenterOfPatterns( images: IndexedSeq[Img]) = {
+
+      val originalVisualizable = images.find( _.isInstanceOf[ImgAndPattern] ) match{
+        case Some(ImgAndPattern(vo,_,_)) => vo
+        case None => null
+      }
+      
+      val points = images.map( _ match {
+        case ImgAndPattern(vo,vp,h) if( vo != null  && vp != null && h != null ) =>
+          Stitcher.transformPoint(vp.getWidth/2,vp.getHeight/2,h)
+       
+        case Image(v) =>
+          Log( "No hay homografia que pintar" )
+          null
         
-      case Image(v) =>
-        Log( "No hay homografía que pintar" )
-        NoImg
-        
-      case NoImg =>
-        Log( "No hay imagen" )
-        NoImg
+        case NoImg =>
+          Log( "No hay imagen" )
+          null
+      } ).filter( _ != null )
+      
+      Image( originalVisualizable.drawMark( points :_* ) )
     }
 
-    new ProcessImagesActor(IndexedSeq(stitchImageActor), paintCenterOfPattern )
+    new ProcessImagesActor( stitchImageActor.toIndexedSeq , paintCenterOfPatterns )
   }
 }
