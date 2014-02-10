@@ -40,7 +40,10 @@ object LocateCenterOfPatternActor{
           null
       } ).filter( _ != null )
       
-      Image( originalVisualizable.drawMark( points :_* ) )
+      if( originalVisualizable != null )
+    	Image( originalVisualizable.drawMark( points :_* ) )
+      else
+        NoImg
     }
 
     new ProcessImagesActor( stitchImageActor.toIndexedSeq , paintCenterOfPatterns )

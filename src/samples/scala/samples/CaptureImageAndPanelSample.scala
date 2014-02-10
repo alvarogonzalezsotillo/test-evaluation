@@ -3,6 +3,13 @@ package samples
 import javax.swing.JFrame
 import evaluation.actor.{CaptureImageActor}
 import evaluation.gui.ImagePanel
+import javax.swing.JButton
+import java.awt.event.ActionListener
+import java.awt.event.ActionEvent
+import evaluation.engine.Image
+import javax.imageio.ImageIO
+import java.io.File
+import java.awt.BorderLayout
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,7 +24,19 @@ object CaptureImageAndPanelSample extends App{
   val panel = ImagePanel(cia, "Webcam")
 
   val frame = new JFrame("Capture image and panel sample")
-  frame add panel
+  val button = new JButton("Save")
+  button addActionListener new ActionListener(){
+    def actionPerformed(e: ActionEvent){
+      cia.lastImage match{
+        case Image(v) =>
+          ImageIO.write(v,"png", new File("capture.png") )
+      }
+    }
+  }
+  
+  frame setLayout new BorderLayout
+  frame add( button, BorderLayout.SOUTH )
+  frame add( panel, BorderLayout.CENTER )
   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 
   frame.setSize(200,200)

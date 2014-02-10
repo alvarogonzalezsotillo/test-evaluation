@@ -24,6 +24,8 @@ class CaptureImageActor extends Actor {
   private var _stopASAP = false
 
   private var _lastImage: LastImage = null
+  
+  def lastImage = _lastImage.image
 
   val _minMillisBetweenFrames = 0
   val self = this
@@ -32,7 +34,9 @@ class CaptureImageActor extends Actor {
   private val vct = vc.startVideoCapture(new ImageCapturedListener {
     def imageCaptured(i: Image.Visualizable) {
       //Log( "Image captured" )
-      self ! ImageCaptured(Image(i), System.currentTimeMillis)
+      if( i != null ){
+    	self ! ImageCaptured(Image(i), System.currentTimeMillis)
+      }
       Thread.sleep(_minMillisBetweenFrames)
     }
   })
