@@ -13,12 +13,16 @@ import evaluation.engine.Image._
 import evaluation.engine.Geom._
 
 
-sealed class Img()
+sealed abstract class Img(){
+  def label : String
+}
 
-case object NoImg extends Img
+case object NoImg extends Img{
+  val label = "No image"
+}
 
 
-class Image(val visualizable: Visualizable) extends Img{
+class Image(val visualizable: Visualizable, val label: String) extends Img{
   assert( visualizable != null )
 }
 
@@ -28,26 +32,27 @@ object Image{
   
   implicit def toOps(v:Visualizable) = new VisualizableOps(v)
   
-  def apply(visualizable: Visualizable) = new Image(visualizable)
+  def apply(visualizable: Visualizable, label: String = "Default label") = new Image(visualizable, label )
   def unapply( img: Image ) = img.visualizable match{
     case null => None
-    case v => new Some( v )
+    case v => new Some( img.visualizable, img.label )
   }
 }
 
-case class SubImg( override val visualizable: Visualizable, parent: Image, x: Int, y: Int ) extends Image(visualizable)
 
-class ImgAndPatterns( val original: Visualizable, val patterns: Seq[Visualizable], val homographies: Seq[Homography] ) extends Image(original)
+class ImgAndPatterns( val original: Visualizable, val patterns: Seq[Visualizable], val homographies: Seq[Homography], label: String )
+  extends Image(original,label)
 
 object ImgAndPatterns{
-  def apply( original: Visualizable, patterns: Seq[Visualizable], homographies: Seq[Homography] ) = new ImgAndPatterns(original, patterns, homographies)
+  def apply( original: Visualizable, patterns: Seq[Visualizable], homographies: Seq[Homography], label: String="With patterns" ) = new ImgAndPatterns(original, patterns, homographies, label)
   def unapply( img: ImgAndPatterns ) = img.visualizable match{
     case null => None
-    case v => new Some( (img.visualizable, img.patterns, img.homographies) )
+    case v => new Some( (img.visualizable, img.patterns, img.homographies, img.label) )
   }
 }
 
-case class ImgAndPattern( override val original: Visualizable, pattern: Visualizable, homography: Homography ) extends ImgAndPatterns(original, Seq(pattern), Seq(homography))
+case class ImgAndPattern( override val original: Visualizable, pattern: Visualizable, homography: Homography, override val label: String )
+     extends ImgAndPatterns(original, Seq(pattern), Seq(homography), label )
 
 
 class VisualizableOps( v: Visualizable ){

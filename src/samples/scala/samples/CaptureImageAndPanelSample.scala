@@ -21,14 +21,14 @@ import java.awt.BorderLayout
 object CaptureImageAndPanelSample extends App{
 
   val cia = new CaptureImageActor
-  val panel = ImagePanel(cia, "Webcam")
+  val panel = ImagePanel(cia)
 
   val frame = new JFrame("Capture image and panel sample")
   val button = new JButton("Save")
   button addActionListener new ActionListener(){
     def actionPerformed(e: ActionEvent){
       cia.lastImage match{
-        case Image(v) =>
+        case Image(v,label) =>
           ImageIO.write(v,"png", new File("capture.png") )
       }
     }

@@ -14,7 +14,10 @@ import evaluation.engine.{Img, Image, NoImg, BinaryImage}
 object BinaryImageActor {
 
   def binarizer(erodeAndDilate: Boolean)(images: IndexedSeq[Img]) = images(0) match{
-    case Image(v) => Image(BinaryImage.toBinaryimage(v, erodeAndDilate))
+    case Image(v,label) => {
+      val bin = BinaryImage.toBinaryimage(v, erodeAndDilate)
+      Image(bin)
+    }
     case _ => NoImg
   }
 

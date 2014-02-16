@@ -21,9 +21,9 @@ object ComputeStitchedImageActor{
   def apply(stitchImageActor: Actor) = {
 
     def computeStitchedImage( images: IndexedSeq[Img]) = images(0) match{
-      case ImgAndPattern(vo,vp,h) if( vo != null  && vp != null && h != null ) =>
+      case ImgAndPattern(vo,vp,h,label) if( vo != null  && vp != null && h != null ) =>
         val newV = Stitcher.renderStitching(vp,vo,h)
-        Image(newV)
+        Image(newV,label + " stitched")
         
       case Image(v) =>
         Log( "No hay homografía que pintar" )

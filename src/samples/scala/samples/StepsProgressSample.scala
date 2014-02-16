@@ -28,7 +28,7 @@ object StepsProgressSample extends App{
     //"corner-two-empty-asymmetric-holes"
   )
   */
-  val patterns = (0 to 0).map( i => s"capture-0$i.png" )
+  val patterns = (4 to 4).map( i => s"capture-0$i.png" )
 
 
   for( p <- patterns ){
@@ -43,7 +43,7 @@ object StepsProgressSample extends App{
 
   def instance( title: String, pattern: Visualizable ){
     val frame = new JFrame(title)
-    frame add EngineStepsPane( Engine(Image(pattern), webcamActor ) )
+    frame add EngineStepsPane( Engine(Image(pattern, "Pattern"), webcamActor ) )
     //frame add EngineStepsPane( FourCornersEngine(webcamActor) )
     
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)

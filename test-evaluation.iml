@@ -59,6 +59,8 @@
     <orderEntry type="library" exported="" scope="RUNTIME" name="httpcore-4.2" level="project" />
     <orderEntry type="library" exported="" scope="RUNTIME" name="colt-1.2.0" level="project" />
     <orderEntry type="library" name="scala-library" level="application" />
+    <orderEntry type="library" exported="" name="scala-library-2.10.3" level="project" />
+    <orderEntry type="library" exported="" name="scala-actors-2.10.3" level="project" />
   </component>
 </module>
 

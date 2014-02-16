@@ -19,8 +19,6 @@ class EngineStepsPane(images: Seq[ImagePanel]) extends JPanel {
 
   object proxy extends ImagePanel {
     override def image() = _componentClicked.image
-
-    override def label() = _componentClicked.label
   }
 
   private val repaintListener = () => proxy.repaint()
@@ -52,7 +50,7 @@ class EngineStepsPane(images: Seq[ImagePanel]) extends JPanel {
 
 object EngineStepsPane {
   def apply(e: Engine) = {
-    val imagePanels = e.imageActors.map(a => ImagePanel(a, a.getClass.getName))
+    val imagePanels = e.imageActors.map(a => ImagePanel(a))
     new EngineStepsPane(imagePanels)
   }
 }

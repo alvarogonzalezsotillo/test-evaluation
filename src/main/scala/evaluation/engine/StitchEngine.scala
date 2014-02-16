@@ -15,7 +15,7 @@ class StitchEngine(patternActor: Actor, imageActor: Actor) extends Engine {
 
   private val stitchActor = StitchImageActor(patternActor,imageActor)
   
-  private val showStitchActor = LocateCenterOfPatternActor(stitchActor)
+  private val showStitchActor = LocatePointsOfPatternActor(true,stitchActor)
 
   val imageActors = IndexedSeq(patternActor, imageActor, stitchActor, showStitchActor)
 }

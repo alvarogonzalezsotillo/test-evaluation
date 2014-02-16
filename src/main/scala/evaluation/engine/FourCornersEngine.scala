@@ -28,7 +28,7 @@ class FourCornersEngine(imageActor: Actor) extends Engine {
   
   private val stitchActors = patternActors.map( p => StitchImageActor( p,imageActor) )
   
-  private val showStitchActor = LocateCenterOfPatternActor(stitchActors :_* )
+  private val showStitchActor = LocatePointsOfPatternActor(true, stitchActors :_* )
 
   val imageActors = IndexedSeq(imageActor, showStitchActor)
 }

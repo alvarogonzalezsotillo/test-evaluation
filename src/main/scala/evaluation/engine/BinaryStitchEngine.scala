@@ -23,7 +23,7 @@ class BinaryStitchEngine(patternActor: Actor, imageActor: Actor) extends Engine 
   
   //private val stitchActor = StitchImageActor(patternActor,imageActor)
   
-  private val showStitchActor = LocateCenterOfPatternActor(stitchActor_binary)
+  private val showStitchActor = LocatePointsOfPatternActor(false, stitchActor_binary)
 
 
   //val imageActors = IndexedSeq(patternActor, imageActor, stitchActor,showStitchActor)

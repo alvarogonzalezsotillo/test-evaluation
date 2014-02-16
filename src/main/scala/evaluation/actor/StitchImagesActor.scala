@@ -24,7 +24,7 @@ object StitchImagesActor{
 
       def stitchImages( images: IndexedSeq[Img] ) = {
         images(1) match{
-          case Image(i) =>
+          case Image(i,label) =>
             val ret = _stitchers.map( _.stitch( i, false ) )
             if( ret.forall( _ != null ) ){
               ImgAndPatterns(i, patterns.map( _.visualizable), ret.map( _.homography ) )

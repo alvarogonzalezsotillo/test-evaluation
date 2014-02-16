@@ -35,7 +35,7 @@ class CaptureImageActor extends Actor {
     def imageCaptured(i: Image.Visualizable) {
       //Log( "Image captured" )
       if( i != null ){
-    	self ! ImageCaptured(Image(i), System.currentTimeMillis)
+    	self ! ImageCaptured(Image(i,"Webcam"), System.currentTimeMillis)
       }
       Thread.sleep(_minMillisBetweenFrames)
     }
