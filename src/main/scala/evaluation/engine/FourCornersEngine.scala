@@ -12,6 +12,7 @@ import java.io.File
  * Date: 31/12/13
  * Time: 17:46
  * To change this template use File | Settings | File Templates.
+ * @deprecated So slow, use StichEngine
  */
 class FourCornersEngine(imageActor: Actor) extends Engine {
 

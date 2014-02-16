@@ -6,7 +6,7 @@ import evaluation.engine.Geom._
 object Cropper{
 
   def apply( img: Img, factor: Int ) : Seq[Seq[Img]]= img match{
-    case Image(v,label) => crop(v,factor)
+    case Image(v,_) => crop(v,factor)
     case NoImg => Seq(Seq(NoImg))
   }
   

@@ -18,6 +18,12 @@ import java.awt.Point
 
 object LocatePointsOfPatternActor{
 
+  /**
+   *
+   * @param corners Paint four corners of pattern, or only centers
+   * @param stitchImageActor sources of homographies
+   * @return
+   */
   def apply( corners: Boolean, stitchImageActor: Actor*) = {
 
     def paintCenterOfPatterns( images: IndexedSeq[Img] ) = {
