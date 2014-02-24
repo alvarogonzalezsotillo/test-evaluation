@@ -26,6 +26,8 @@ object Geom {
 
     def -(p: Point) = this + p * -1
 
+    def center = Point(left + width/2, top + height/2 )
+
     def moveCenter( p: Point ) = {
       val l = p.x - width/2
       val t = p.y - height/2
