@@ -11,11 +11,12 @@ package evaluation.gui.world
 
 
 trait Transform {
-  def concatenate( t: Transform ) : Transform
-  def preConcatenate( t: Transform ) : Transform
-  def inverse: Option[Transform]
+  type myType
+  def concatenate( t: myType ) : myType
+  def preConcatenate( t: myType ) : myType
+  def inverse: Option[myType]
 }
 
-object Transform{
-  val IdentityTransform : Transform = null
-}
+
+
+

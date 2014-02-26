@@ -15,6 +15,7 @@ object Geom {
 
     override def toString = s"($x,$y)"
 
+    def toInts = (x.toInt,y.toInt)
   }
 
   object Point {
@@ -22,11 +23,22 @@ object Geom {
   }
 
   class Rect(val left: Coord, val top: Coord, val width: Coord, val height: Coord) {
+
+    def toInts = (left.toInt,top.toInt,width.toInt,height.toInt)
+    def toIntCorners = (left.toInt,top.toInt,right.toInt,bottom.toInt)
+
     def +(p: Point) = Rect(left + p.y, top + p.x, width, height)
 
     def -(p: Point) = this + p * -1
 
     def center = Point(left + width/2, top + height/2 )
+    
+    def cornerPoints = IndexedSeq(
+      Point(left,top),
+      Point(right,top),
+      Point(right,bottom),
+      Point(left,bottom)
+    )
 
     def moveCenter( p: Point ) = {
       val l = p.x - width/2

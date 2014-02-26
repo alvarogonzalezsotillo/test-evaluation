@@ -17,7 +17,7 @@ trait Drawable {
   object DPoint{
     class ConcreteDPoint(x:Coord,y:Coord) extends DPoint(x,y)
     def apply(x:Coord,y:Coord) = new ConcreteDPoint(x,y)
-    def apply(x:Coord,y:Coord,v:View) =
+    def apply(x:Coord,y:Coord,v:View) = ???
   }
 
   def box : Rect

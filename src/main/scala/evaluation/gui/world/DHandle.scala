@@ -11,7 +11,7 @@ import Cursor._
  * Time: 12:55
  * To change this template use File | Settings | File Templates.
  */
-class Handle( size: Coord, cursor: Cursor ) extends Drawable{
+abstract class DHandle( size: Coord, cursor: Cursor ) extends Drawable{
   private var _box = Rect(0,0,size,size)
   def box = _box
 
@@ -24,5 +24,11 @@ class Handle( size: Coord, cursor: Cursor ) extends Drawable{
     case _ => Point(0,0)
   }
 
-  def moveCenter(delta: Point) = _box.moveCenter(adjustDelta(delta))
+  def moveCenter(delta: Point) = _box = _box.moveCenter(adjustDelta(delta))
+
+
+}
+
+object DHandle{
+  def apply( size: Coord, cursor: Cursor ) = new AWTDHandle(size,cursor)
 }
