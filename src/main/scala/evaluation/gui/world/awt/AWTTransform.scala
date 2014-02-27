@@ -21,7 +21,7 @@ class AWTTransform( val transform : AffineTransform = new AffineTransform() ) ex
     new AWTTransform( newT )
   }
 
-  def inverse = tryOption{
+  def inverse = tryOption(){
     val ret : AWTTransform = new AWTTransform( transform.createInverse() )
     ret
   }
@@ -40,12 +40,14 @@ object AWTTransform{
     case at: AWTTransform => at.transform
   }
 
-  def tryOption[T]( proc: => T ) = {
+  def tryOption[T]( handler: (Throwable)=> Unit = println )( proc: => T ) = {
     try{
       Option(proc)
     }
     catch{
-      case _ : Exception => None
+      case t : Throwable =>
+        handler(t)
+        None
     }
   }
 
