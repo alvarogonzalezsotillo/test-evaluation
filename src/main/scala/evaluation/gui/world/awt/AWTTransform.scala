@@ -21,15 +21,17 @@ class AWTTransform( val transform : AffineTransform = new AffineTransform() ) ex
     new AWTTransform( newT )
   }
 
+  def inverse = tryOption{
+    val ret : AWTTransform = new AWTTransform( transform.createInverse() )
+    ret
+  }
+
   def preConcatenate(t: AWTTransform) = {
     val newT = new AffineTransform(transform)
     newT.preConcatenate(t)
     new AWTTransform( newT )
   }
 
-  def inverse = tryOption{
-    new AWTTransform( transform.createInverse() )
-  }
 }
 
 object AWTTransform{
@@ -43,7 +45,7 @@ object AWTTransform{
       Option(proc)
     }
     catch{
-      case _ => None
+      case _ : Exception => None
     }
   }
 

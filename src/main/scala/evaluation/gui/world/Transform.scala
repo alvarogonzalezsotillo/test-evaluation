@@ -11,12 +11,16 @@ package evaluation.gui.world
 
 
 trait Transform {
-  type myType
+  type myType = this.type
   def concatenate( t: myType ) : myType
   def preConcatenate( t: myType ) : myType
-  def inverse: Option[myType]
+  def inverse: Option[this.type]
 }
 
 
-
+object Syntaxcheck{
+  val t1: Transform = null
+  val inverse = t1.inverse.get
+  val operation = t1.concatenate(inverse)
+}
 

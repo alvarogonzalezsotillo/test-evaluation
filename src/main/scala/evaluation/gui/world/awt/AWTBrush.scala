@@ -34,7 +34,7 @@ class AWTBrush( graphics: Graphics2D ) extends Brush{
     graphics.drawString(text,x,y)
   }
 
-  def drawLine(ini: Point, end: Point ) = temporaryTransform(t){
+  def drawLine(ini: Point, end: Point ) = {
     val (x1,y1) = ini.toInts
     val (x2,y2) = end.toInts
     graphics.drawLine(x1,y1,x2,y2)

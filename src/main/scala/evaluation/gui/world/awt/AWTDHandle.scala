@@ -11,7 +11,7 @@ import evaluation.gui.world.Cursor._
  * Time: 10:41
  * To change this template use File | Settings | File Templates.
  */
-class AWTDHandle(size: Coord, cursor: Cursor) extends DHandle(size,cursor){
+class AWTDHandle(size: Coord, cursor: Cursor) extends DHandle{
   def draw(brush: Brush) = {
     val b = box
     brush.drawRect(box)

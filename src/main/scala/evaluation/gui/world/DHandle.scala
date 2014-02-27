@@ -1,7 +1,6 @@
 package evaluation.gui.world
 
 import evaluation.engine.Geom.{Point, Coord, Rect}
-import evaluation.gui.world.Drawable
 import Cursor._
 
 /**
@@ -11,7 +10,11 @@ import Cursor._
  * Time: 12:55
  * To change this template use File | Settings | File Templates.
  */
-abstract class DHandle( size: Coord, cursor: Cursor ) extends Drawable{
+trait DHandle extends Drawable{
+
+  def size : Coord
+  def cursor : Cursor
+
   private var _box = Rect(0,0,size,size)
   def box = _box
 
@@ -25,10 +28,4 @@ abstract class DHandle( size: Coord, cursor: Cursor ) extends Drawable{
   }
 
   def moveCenter(delta: Point) = _box = _box.moveCenter(adjustDelta(delta))
-
-
-}
-
-object DHandle{
-  def apply( size: Coord, cursor: Cursor ) = new AWTDHandle(size,cursor)
 }
