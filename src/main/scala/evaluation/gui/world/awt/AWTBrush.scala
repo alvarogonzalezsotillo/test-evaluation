@@ -1,6 +1,6 @@
 package evaluation.gui.world.awt
 
-import java.awt.{Font, Color, Graphics2D}
+import java.awt.{Graphics, Font, Color, Graphics2D}
 import evaluation.gui.world.{Transform, Brush}
 import evaluation.engine.Geom.Point
 import evaluation.engine.Geom.Rect
@@ -59,4 +59,10 @@ class AWTBrush( graphics: Graphics2D ) extends Brush{
 
 object AWTBrush{
   val transparentColor = new Color(0,0,0,0)
+
+
+  implicit def fromGraphics( g: Graphics ) = {
+    val g2d = g.asInstanceOf[Graphics2D]
+    new AWTBrush(g2d)
+  }
 }

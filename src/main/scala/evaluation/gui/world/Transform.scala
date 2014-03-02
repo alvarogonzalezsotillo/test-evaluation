@@ -1,5 +1,7 @@
 package evaluation.gui.world
 
+import evaluation.engine.Geom.Point
+
 /**
  * Created with IntelliJ IDEA.
  * User: alvaro
@@ -11,10 +13,11 @@ package evaluation.gui.world
 
 
 trait Transform {
-  type myType = this.type
-  def concatenate( t: myType ) : myType
-  def preConcatenate( t: myType ) : myType
-  def inverse: Option[this.type]
+  type Self <: Transform
+  def concatenate( t: Self ) : Self
+  def preConcatenate( t: Self ) : Self
+  def inverse: Option[Self]
+  def apply( t: Point ): Point
 }
 
 

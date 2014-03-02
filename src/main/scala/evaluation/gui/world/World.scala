@@ -2,6 +2,7 @@ package evaluation.gui.world
 
 import evaluation.engine.Geom.{Point, Rect}
 import evaluation.gui.world.Cursor._
+import evaluation.gui.world.ViewWorldCoordinates.DPoint
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,14 +26,14 @@ class World extends Drawable{
     Rect(0,0,0,0)
   }
 
-  def drawablesAt( p: Point ) = _drawables.filter( _.inside(p) )
+  def drawablesAt( p: DPoint ) = _drawables.filter( _.inside(p) )
 
-  def cursor(p: Point): Cursor = drawablesAt(p) match{
+  def cursor(p: DPoint): Cursor = drawablesAt(p) match{
     case d if d.size > 0 => d.iterator.next.cursor(p)
     case _ => NormalCursor
   }
 
-  def moveCenter(delta: Point) = _drawables.foreach( _.moveCenter(delta) )
+  def moveCenter(delta: DPoint) = _drawables.foreach( _.moveCenter(delta) )
 
   def draw(brush: Brush) = _drawables.foreach( _.draw(brush) )
 }

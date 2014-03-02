@@ -2,6 +2,8 @@ package evaluation.gui.world
 
 import evaluation.engine.Geom.{Point, Coord, Rect}
 import Cursor._
+import evaluation.gui.world.awt.AWTDHandle
+import evaluation.gui.world.ViewWorldCoordinates.DPoint
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,17 +17,22 @@ trait DHandle extends Drawable{
   def size : Coord
   def cursor : Cursor
 
-  private var _box = Rect(0,0,size,size)
+  private var _box = Rect(-size/2,-size/2,size,size)
   def box = _box
 
-  def cursor(p: Point) = cursor
+  def cursor(p: DPoint): Cursor = cursor
 
-  private def adjustDelta( delta: Point ) = cursor match{
-    case ResizeCursor => delta
-    case ResizeSNCursor => Point(box.center.x,delta.y)
-    case ResizeEWCursor => Point(delta.x,box.center.y)
+  private def adjustPoint( p: DPoint ) = cursor match{
+    case ResizeCursor => p
+    case NormalCursor => p
+    case ResizeSNCursor => DPoint(box.center.x,p.y)
+    case ResizeEWCursor => DPoint(p.x,box.center.y)
     case _ => Point(0,0)
   }
 
-  def moveCenter(delta: Point) = _box = _box.moveCenter(adjustDelta(delta))
+  def moveCenter(to: DPoint) = _box = _box.moveCenter(adjustPoint(to))
+}
+
+object DHandle{
+  def apply( size: Coord, cursor: Cursor) = new AWTDHandle(size,cursor)
 }

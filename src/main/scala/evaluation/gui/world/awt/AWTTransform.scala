@@ -1,8 +1,9 @@
 package evaluation.gui.world.awt
 
 import evaluation.gui.world.Transform
-import java.awt.geom.AffineTransform
+import java.awt.geom.{Point2D, AffineTransform}
 import evaluation.gui.world.awt.AWTTransform._
+import evaluation.engine.Geom.Point
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,34 +14,41 @@ import evaluation.gui.world.awt.AWTTransform._
  */
 class AWTTransform( val transform : AffineTransform = new AffineTransform() ) extends Transform{
 
-  type myType = AWTTransform
+  type Self = AWTTransform
 
-  def concatenate(t: AWTTransform) = {
+  override def concatenate(t: AWTTransform) = {
     val newT = new AffineTransform(transform)
     newT.concatenate(t)
     new AWTTransform( newT )
   }
 
-  def inverse = tryOption(){
-    val ret : AWTTransform = new AWTTransform( transform.createInverse() )
-    ret
+  override def inverse : Option[AWTTransform] = tryOption(){
+    val i = transform.createInverse()
+    new AWTTransform( i )
   }
 
-  def preConcatenate(t: AWTTransform) = {
+  override def preConcatenate(t: AWTTransform) = {
     val newT = new AffineTransform(transform)
     newT.preConcatenate(t)
     new AWTTransform( newT )
   }
 
+  def apply(t: Point): Point = {
+    val newT = new Point2D.Float(t.x,t.y)
+    transform.transform(newT,newT)
+    new Point(newT.x, newT.y)
+  }
 }
+
 
 object AWTTransform{
   implicit def toAffineTransform(at: AWTTransform): AffineTransform = at.transform
   implicit def toAffineTransform(t: Transform) : AffineTransform = t match{
     case at: AWTTransform => at.transform
+    case at if( at == null ) => new AffineTransform()
   }
 
-  def tryOption[T]( handler: (Throwable)=> Unit = println )( proc: => T ) = {
+  def tryOption[T]( handler: (Throwable)=> Unit = println )( proc: => T ) : Option[T] = {
     try{
       Option(proc)
     }
@@ -50,5 +58,7 @@ object AWTTransform{
         None
     }
   }
+
+  val identity = new AWTTransform( new AffineTransform )
 
 }
