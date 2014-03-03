@@ -63,6 +63,7 @@ trait View {
   this += {
     case MouseMoved(p) =>
       cursor = drawable.cursor(p)
+    case _ =>
   }
 
 

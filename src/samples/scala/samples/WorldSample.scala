@@ -17,7 +17,7 @@ object WorldSample extends App{
   val frame = new JFrame( "World Sample")
 
   val world = new World
-  val h = DHandle(10,NormalCursor)
+  val h = DHandle(10,ResizeEWCursor)
   world.add( h )
 
   val view = new AWTView

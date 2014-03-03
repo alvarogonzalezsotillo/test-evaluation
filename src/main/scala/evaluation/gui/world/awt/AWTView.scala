@@ -9,6 +9,19 @@ import evaluation.gui.world.ViewWorldCoordinates.VPoint
 import evaluation.gui.world.MouseClicked
 import evaluation.gui.world.Cursor._
 
+
+object AWTView {
+  implicit def toVPoint(e: AWTMouseEvent)(implicit v: View) = VPoint(e.getX, e.getY)
+
+  implicit def toAWTCursor(c: Cursor) = c match {
+    case ResizeEWCursor => AWTCursor.getPredefinedCursor(AWTCursor.W_RESIZE_CURSOR)
+    case ResizeSNCursor => AWTCursor.getPredefinedCursor(AWTCursor.S_RESIZE_CURSOR)
+    case _ => AWTCursor.getDefaultCursor
+  }
+
+  implicit def toAWTCanvas(v: AWTView) = v._canvas
+}
+
 /**
  * Created with IntelliJ IDEA.
  * User: alvaro
@@ -20,7 +33,7 @@ class AWTView extends View {
 
   import evaluation.gui.world.awt.AWTView._
 
-  private val _canvas = new Canvas(){
+  private val _canvas = new Canvas() {
     override def paint(g: Graphics) = reDraw(g)
   }
 
@@ -28,7 +41,7 @@ class AWTView extends View {
 
   transform = AWTTransform.identity
 
-  override def cursor_=(c:Cursor) = {
+  override def cursor_=(c: Cursor) = {
     super.cursor_=(c)
     _canvas.setCursor(c)
   }
@@ -52,14 +65,3 @@ class AWTView extends View {
   _canvas.addMouseMotionListener(_mouseListener)
 }
 
-object AWTView{
-  implicit def toVPoint(e: AWTMouseEvent)(implicit v: View) : VPoint = VPoint(e.getX, e.getY)
-
-  implicit def toAWTCursor(c:Cursor) : AWTCursor = c match{
-    case ResizeEWCursor => AWTCursor.getPredefinedCursor( AWTCursor.W_RESIZE_CURSOR)
-    case ResizeSNCursor => AWTCursor.getPredefinedCursor( AWTCursor.S_RESIZE_CURSOR)
-    case _ => AWTCursor.getDefaultCursor
-  }
-
-  implicit def toAWTCanvas(v:AWTView) : Canvas = v._canvas
-}
