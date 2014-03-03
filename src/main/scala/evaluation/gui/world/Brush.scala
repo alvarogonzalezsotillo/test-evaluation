@@ -14,6 +14,7 @@ trait Brush {
   def drawImg( img: Image, to: Rect )
   def drawText( text: String, to: Point )
   def drawLine( ini: Point, end: Point )
+  def fillRect( r: Rect )
   def setFont( font: String )
   def setColor( color: String )
   def transform( t: Transform ) : Brush

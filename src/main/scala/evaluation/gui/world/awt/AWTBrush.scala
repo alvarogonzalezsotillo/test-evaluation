@@ -24,10 +24,17 @@ class AWTBrush( graphics: Graphics2D ) extends Brush{
     graphics.setTransform(oldT)
   }
 
+
   def drawImg(img: Image, to: Rect ) = {
     val (x,y,w,h) = to.toInts
     graphics.drawImage(img.visualizable,x,y,w,h,transparentColor,null)
   }
+
+  def fillRect(r: Rect) = {
+    val (x,y,w,h) = r.toInts
+    graphics.fillRect(x,y,w,h)
+  }
+
 
   def drawText(text: String, to: Point ) = {
     val (x,y) = to.toInts
@@ -55,6 +62,7 @@ class AWTBrush( graphics: Graphics2D ) extends Brush{
     newGraphics.transform(t)
     new AWTBrush( newGraphics )
   }
+
 }
 
 object AWTBrush{

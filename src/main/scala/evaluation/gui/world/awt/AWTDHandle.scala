@@ -16,6 +16,7 @@ import evaluation.engine.Geom
 class AWTDHandle(val size: Coord, val cursor: Cursor) extends DHandle{
   def draw(brush: Brush) = {
     val b = box
+    brush.setColor("#000000")
     brush.drawRect(box)
     brush.drawText(cursor.toString,box.center)
     println( "AWTDHandle: draw")

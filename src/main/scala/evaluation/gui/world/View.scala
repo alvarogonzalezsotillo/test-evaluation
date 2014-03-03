@@ -1,7 +1,7 @@
 package evaluation.gui.world
 
 import evaluation.engine.Geom.Rect
-import evaluation.gui.world.ViewWorldCoordinates.VPoint
+import evaluation.gui.world.Cursor._
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,6 +16,7 @@ trait View {
 
   var _transform: Transform = null
   var _drawable: Drawable = null
+  var _cursor: Cursor = NormalCursor
 
   def brush: Brush
 
@@ -29,13 +30,23 @@ trait View {
 
   def transform_=(t: Transform) = _transform = t
 
-  def reDraw{
+  def cursor: Cursor = _cursor
+
+  def cursor_=(c: Cursor) = _cursor = c
+
+  def reDraw {
     reDraw(brush)
   }
 
+  def eraseBackground(br:Brush){
+    br.setColor("#cccccc")
+    br.fillRect(box)
+  }
+
   def reDraw(br: Brush) {
+    eraseBackground(br)
     val b = br.transform(transform)
-    println( "Redraw" )
+    println("Redraw")
     drawable.draw(b)
   }
 
@@ -47,7 +58,13 @@ trait View {
 
   def -=(l: MouseListener) = _mouseListeners = _mouseListeners - l
 
-  def invokeMouseEvent( me: MouseEvent ) =  _mouseListeners.foreach(_(me))
+  def invokeMouseEvent(me: MouseEvent) = _mouseListeners.foreach(_(me))
+
+  this += {
+    case MouseMoved(p) =>
+      cursor = drawable.cursor(p)
+  }
+
 
 }
 
