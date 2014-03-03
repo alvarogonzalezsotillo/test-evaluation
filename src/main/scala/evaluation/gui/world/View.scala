@@ -12,6 +12,8 @@ import evaluation.gui.world.ViewWorldCoordinates.VPoint
  */
 trait View {
 
+  implicit val self = this
+
   var _transform: Transform = null
   var _drawable: Drawable = null
 
@@ -37,18 +39,16 @@ trait View {
     drawable.draw(b)
   }
 
-  type MouseClickedListener = (MouseClicked) => Unit
+  type MouseListener = (MouseEvent) => Unit
 
-  private var _mouseClickedListener = Set[MouseClickedListener]()
+  private var _mouseListeners = Set[MouseListener]()
 
-  def +=(l: MouseClickedListener) = _mouseClickedListener = _mouseClickedListener + l
+  def +=(l: MouseListener) = _mouseListeners = _mouseListeners + l
 
-  def -=(l: MouseClickedListener) = _mouseClickedListener = _mouseClickedListener - l
+  def -=(l: MouseListener) = _mouseListeners = _mouseListeners - l
 
-  def invokeMouseClicked( p: VPoint ) = {
-    val mc = MouseClicked(p)
-    _mouseClickedListener.foreach(_(mc))
-  }
+  def invokeMouseEvent( me: MouseEvent ) =  _mouseListeners.foreach(_(me))
+
 }
 
 

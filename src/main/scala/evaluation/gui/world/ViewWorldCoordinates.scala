@@ -43,7 +43,8 @@ object ViewWorldCoordinates {
     }
   }
 
-  implicit def toD( vp: VPoint ) = DPoint(vp)
-  implicit def toV( dp: DPoint )(implicit view: View ) = VPoint(dp)
+  implicit def toD(vp: VPoint) = DPoint(vp)
+
+  implicit def toV(dp: DPoint)(implicit view: View) = VPoint(dp)
 
 }

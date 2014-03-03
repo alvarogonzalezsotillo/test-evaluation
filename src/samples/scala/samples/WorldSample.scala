@@ -1,10 +1,9 @@
 package samples
 
 import javax.swing.JFrame
-import evaluation.gui.world.{ViewWorldCoordinates, MouseClicked, DHandle, World}
+import evaluation.gui.world.{ViewWorldCoordinates, MouseEvent, DHandle, World}
 import evaluation.gui.world.awt.{AWTView, AWTDHandle}
 import evaluation.gui.world.Cursor._
-import evaluation.gui.world.ViewWorldCoordinates._
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,9 +23,9 @@ object WorldSample extends App{
   val view = new AWTView
   view.drawable = world
 
-  view += { m: MouseClicked =>
-    println( m )
-    h.moveCenter( m.p )
+  view += { case MouseEvent(p) =>
+    println( p )
+    h.moveCenter( p )
     view.reDraw
   }
 
