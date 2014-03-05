@@ -20,7 +20,7 @@ trait DHandle extends Drawable{
   private var _box = Rect(-size/2,-size/2,size,size)
   def box = _box
 
-  def cursor(p: DPoint): Cursor = cursor
+  override def cursor(p: DPoint): Cursor = cursor
 
   private def adjustPoint( p: DPoint ) = cursor match{
     case ResizeCursor => p

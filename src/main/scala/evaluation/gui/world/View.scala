@@ -2,6 +2,7 @@ package evaluation.gui.world
 
 import evaluation.engine.Geom.Rect
 import evaluation.gui.world.Cursor._
+import com.typesafe.scalalogging.slf4j.Logging
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,7 +11,7 @@ import evaluation.gui.world.Cursor._
  * Time: 12:21
  * To change this template use File | Settings | File Templates.
  */
-trait View {
+trait View extends Logging{
 
   implicit val self = this
 
@@ -44,9 +45,9 @@ trait View {
   }
 
   def reDraw(br: Brush) {
+    logger.debug( "reDraw" )
     eraseBackground(br)
     val b = br.transform(transform)
-    println("Redraw")
     drawable.draw(b)
   }
 

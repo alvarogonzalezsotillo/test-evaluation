@@ -48,16 +48,6 @@ object AWTTransform{
     case at if( at == null ) => new AffineTransform()
   }
 
-  def tryOption[T]( handler: (Throwable)=> Unit = println )( proc: => T ) : Option[T] = {
-    try{
-      Option(proc)
-    }
-    catch{
-      case t : Throwable =>
-        handler(t)
-        None
-    }
-  }
 
   val identity = new AWTTransform( new AffineTransform )
 

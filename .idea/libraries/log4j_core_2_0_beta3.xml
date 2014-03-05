@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="log4j-core-2.0-beta3">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/artifacts-24/filestore/org.apache.logging.log4j/log4j-core/2.0-beta3/source/f5cfea3c8111ccda616add1ef273645fa8e0724a/log4j-core-2.0-beta3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

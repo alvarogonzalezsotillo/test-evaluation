@@ -7,6 +7,7 @@ import evaluation.engine.Geom.Rect
 import evaluation.engine.Image
 import evaluation.gui.world.awt.AWTBrush._
 import evaluation.gui.world.awt.AWTTransform._
+import evaluation.gui.world
 
 /**
  * Created with IntelliJ IDEA.
@@ -66,7 +67,7 @@ class AWTBrush( graphics: Graphics2D ) extends Brush{
 }
 
 object AWTBrush{
-  val transparentColor = new Color(0,0,0,0)
+  val transparentColor = new Color(0,0,0,255)
 
 
   implicit def fromGraphics( g: Graphics ) = {
