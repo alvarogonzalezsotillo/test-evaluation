@@ -67,7 +67,7 @@ class AWTBrush( graphics: Graphics2D ) extends Brush{
 }
 
 object AWTBrush{
-  val transparentColor = new Color(0,0,0,255)
+  val transparentColor = new Color(0,0,0,0)
 
 
   implicit def fromGraphics( g: Graphics ) = {

@@ -27,7 +27,7 @@ object WorldSample extends App with Logging {
   val h = DHandle(10, ResizeEWCursor)
   world.add(h)
 
-  val i = DIcon("./src/testimages/corners/knotborder.png")
+  val i = DIcon("./src/testimages/corners/pink_flower_corner.png")
   world.add(i)
 
   val view = new AWTView
@@ -37,6 +37,7 @@ object WorldSample extends App with Logging {
     case MouseEvent(p) =>
       println(p)
       h.moveCenter(p)
+      i.moveCenter(p)
       view.reDraw
   }
 

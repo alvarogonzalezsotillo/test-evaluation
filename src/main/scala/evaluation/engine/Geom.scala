@@ -27,7 +27,7 @@ object Geom {
     def toInts = (left.toInt,top.toInt,width.toInt,height.toInt)
     def toIntCorners = (left.toInt,top.toInt,right.toInt,bottom.toInt)
 
-    def +(p: Point) = Rect(left + p.y, top + p.x, width, height)
+    def +(p: Point) = Rect(left + p.x, top + p.y, width, height)
 
     def -(p: Point) = this + p * -1
 
