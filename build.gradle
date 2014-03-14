@@ -40,7 +40,7 @@ dependencies {
     
     // Driver for sarxos
     //runtime group: 'org.openimaj', name: 'core', version: '1.1'
-    runtime group:  'com.github.sarxos', name: 'lti-civil-no-swt', version: '20070920-1721'
+    //runtime group:  'com.github.sarxos', name: 'lti-civil-no-swt', version: '20070920-1721'
 
 }
 

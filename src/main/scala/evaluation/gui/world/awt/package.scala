@@ -11,12 +11,14 @@ import com.typesafe.scalalogging.slf4j.Logging
  */
 package object awt extends Logging{
 
+  type ErrorHandler = (Throwable) => Unit
+
   def tryOptionIgnored(t: Throwable ) = Unit
   def tryOptionPropagated(t: Throwable ) = throw t
   def tryOptionLogged(t: Throwable) = logger.debug( "tryOptionLogged", t )
   val tryOptionDefaultHandler = tryOptionLogged _
 
-  def tryOption[T]( handler: (Throwable)=> Unit = tryOptionDefaultHandler )( proc: => T ) : Option[T] = {
+  def tryOption[T]( handler: ErrorHandler = tryOptionDefaultHandler )( proc: => T ) : Option[T] = {
     try{
       Option(proc)
     }

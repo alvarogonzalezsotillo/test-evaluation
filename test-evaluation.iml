@@ -38,7 +38,6 @@
     <orderEntry type="library" exported="" name="scala-actors-2.10.3" level="project" />
     <orderEntry type="library" exported="" name="scala-reflect-2.10.0" level="project" />
     <orderEntry type="library" exported="" name="scalalogging-slf4j_2.10-1.0.1" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="lti-civil-no-swt-20070920-1721" level="project" />
     <orderEntry type="library" exported="" name="slf4j-api-1.7.5" level="project" />
     <orderEntry type="library" exported="" name="log4j-slf4j-impl-2.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="log4j-api-2.0-rc1" level="project" />

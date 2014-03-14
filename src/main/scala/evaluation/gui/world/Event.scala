@@ -22,3 +22,7 @@ case class MouseClicked( override val p: VPoint ) extends MouseEvent(p)
 case class MouseDragged( override val p: VPoint ) extends MouseEvent(p)
 
 case class MouseMoved( override val p: VPoint ) extends MouseEvent(p)
+
+case class MouseDown( override val p: VPoint ) extends MouseEvent(p)
+
+case class MouseUp( override val p: VPoint ) extends MouseEvent(p)

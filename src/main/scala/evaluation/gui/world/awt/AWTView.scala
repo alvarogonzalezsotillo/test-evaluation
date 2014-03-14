@@ -58,6 +58,10 @@ class AWTView extends View {
 
     override def mouseDragged(e: AWTMouseEvent) = invokeMouseEvent(MouseDragged(e))
 
+    override def mousePressed( e: AWTMouseEvent ) = invokeMouseEvent(MouseDown(e))
+
+    override def mouseReleased( e: AWTMouseEvent ) = invokeMouseEvent(MouseUp(e))
+
     override def mouseMoved(e: AWTMouseEvent) = invokeMouseEvent(MouseMoved(e))
   }
 

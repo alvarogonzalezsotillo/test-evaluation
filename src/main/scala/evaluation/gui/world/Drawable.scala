@@ -14,10 +14,16 @@ import evaluation.gui.world.ViewWorldCoordinates.DPoint
  */
 trait Drawable {
 
+  var _container : Container = null
+
+  def container = _container
+  def container_=( c: Container ) = _container = c
+
 
   def box : Rect
   def cursor( p: DPoint ) : Cursor = NormalCursor
   def moveCenter( to: DPoint )
   def inside( p: DPoint ) = box.inside(p)
   def draw( brush: Brush )
+
 }

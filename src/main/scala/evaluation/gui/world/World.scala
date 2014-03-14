@@ -11,7 +11,7 @@ import evaluation.gui.world.ViewWorldCoordinates.DPoint
  * Time: 11:51
  * To change this template use File | Settings | File Templates.
  */
-class World extends Drawable{
+class World extends Drawable with Container{
 
   val _drawables = collection.mutable.Set[Drawable]()
 
@@ -36,4 +36,11 @@ class World extends Drawable{
   def moveCenter(delta: DPoint) = _drawables.foreach( _.moveCenter(delta) )
 
   def draw(brush: Brush) = _drawables.foreach( _.draw(brush) )
+
+  def reDraw = container.reDraw
+
+  override def container_=(c : Container ) = {
+    super.container_=(c)
+    _drawables.foreach( _.container = c )
+  }
 }

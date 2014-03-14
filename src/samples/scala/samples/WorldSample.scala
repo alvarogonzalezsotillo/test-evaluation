@@ -33,12 +33,12 @@ object WorldSample extends App with Logging {
   val view = new AWTView
   view.drawable = world
 
+  val att = view += View.moveWithPointerBehaviour( h )
+
+  view += View.moveWithDragBehaviour(i)
+
   view += {
-    case MouseEvent(p) =>
-      println(p)
-      h.moveCenter(p)
-      i.moveCenter(p)
-      view.reDraw
+    case MouseClicked(_) => att.dettach
   }
 
   frame.add(view)

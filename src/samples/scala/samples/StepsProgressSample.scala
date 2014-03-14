@@ -28,7 +28,7 @@ object StepsProgressSample extends App{
     //"corner-two-empty-asymmetric-holes"
   )
   */
-  val patterns = (3 to 3).map( i => s"capture-0$i.png" )
+  val patterns = (5 to 5).map( i => s"capture-0$i.png" )
 
 
   for( p <- patterns ){

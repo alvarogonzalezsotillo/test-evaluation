@@ -7,6 +7,7 @@ import java.io.{InputStream, FileInputStream, File}
 import java.net.URL
 import evaluation.engine.Image
 import com.typesafe.scalalogging.slf4j.Logging
+import scala._
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,7 +33,9 @@ class AWTIcon(val imageLocator: String) extends DIcon {
 
 object AWTIcon extends Logging {
 
-  private def inputStreamFrom(i: String): Option[InputStream] = {
+
+
+  private def inputStreamFrom(i: String, errorHandler: ErrorHandler = tryOptionIgnored ): Option[InputStream] = {
     def fromResource() = tryOption() {
       getClass.getResourceAsStream(i)
     }
