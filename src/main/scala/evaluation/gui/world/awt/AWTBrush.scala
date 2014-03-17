@@ -48,12 +48,14 @@ class AWTBrush( graphics: Graphics2D ) extends Brush{
     graphics.drawLine(x1,y1,x2,y2)
   }
 
-  def setFont(font: String) = {
+  override def font_=(font: String) = {
+    super.font_=(font)
     val f = Font.decode(font)
     graphics.setFont(f)
   }
 
-  def setColor(color: String) = {
+  override def color_=(color: String) = {
+    super.color_=(color)
     val c = Color.decode(color)
     graphics.setColor(c)
   }

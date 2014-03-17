@@ -14,17 +14,19 @@ import evaluation.gui.world.awt.AWTIcon
  */
 trait DIcon extends Drawable {
 
-  private var _center = DPoint(0,0)
+  val center = Prop(DPoint(0,0))
 
-  override def moveCenter( p: DPoint ) = _center = p
+  override def moveCenter( p: DPoint ) = center() = p
 
   def imageBox : Rect
 
-  override def box = imageBox + _center
+  box.derive( center ){
+    imageBox + center()
+  }
 
   def image : Image
 
-  override def draw( b: Brush ) = b.drawImg( image, box )
+  override def draw( b: Brush ) = b.drawImg( image, box() )
 }
 
 object DIcon{

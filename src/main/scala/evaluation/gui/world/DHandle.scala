@@ -14,23 +14,25 @@ import evaluation.gui.world.ViewWorldCoordinates.DPoint
  */
 trait DHandle extends Drawable{
 
+  import Brush._
+
   def size : Coord
   def cursor : Cursor
 
-  private var _box = Rect(-size/2,-size/2,size,size)
-  def box = _box
+  box() = Rect(-size/2,-size/2,size,size)
+  val color : Prop[Color] = Prop( "#ffffff")
 
   override def cursor(p: DPoint): Cursor = cursor
 
   private def adjustPoint( p: DPoint ) = cursor match{
     case ResizeCursor => p
     case NormalCursor => p
-    case ResizeSNCursor => DPoint(box.center.x,p.y)
-    case ResizeEWCursor => DPoint(p.x,box.center.y)
+    case ResizeSNCursor => DPoint(box().center.x,p.y)
+    case ResizeEWCursor => DPoint(p.x,box().center.y)
     case _ => Point(0,0)
   }
 
-  def moveCenter(to: DPoint) = _box = _box.moveCenter(adjustPoint(to))
+  def moveCenter(to: DPoint) =  box() = box().moveCenter(adjustPoint(to))
 }
 
 object DHandle{

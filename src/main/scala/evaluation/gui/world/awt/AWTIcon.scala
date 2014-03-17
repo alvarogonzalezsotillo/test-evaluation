@@ -29,6 +29,7 @@ class AWTIcon(val imageLocator: String) extends DIcon {
     Rect(-w / 2, -h / 2, w, h)
   }
 
+  box() = imageBox
 }
 
 object AWTIcon extends Logging {

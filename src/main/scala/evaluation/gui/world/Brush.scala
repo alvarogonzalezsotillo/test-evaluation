@@ -11,12 +11,20 @@ import evaluation.engine.Geom.{Rect, Point}
  * To change this template use File | Settings | File Templates.
  */
 trait Brush {
+
+  import Brush._
+
+  var _color : Color = "#000000"
+  var _font : Font = "Arial-10"
+
   def drawImg( img: Image, to: Rect )
   def drawText( text: String, to: Point )
   def drawLine( ini: Point, end: Point )
   def fillRect( r: Rect )
-  def setFont( font: String )
-  def setColor( color: String )
+  def font_=( font: Font ) = _font = font
+  def color_=( color: Color ) = _color = color
+  def color : Color = _color
+  def font : Font = _font
   def transform( t: Transform ) : Brush
 
   def drawRect( r: Rect ) = {
@@ -27,4 +35,9 @@ trait Brush {
     drawLine( c(3), c(0) )
   }
 
+}
+
+object Brush{
+  type Color = String
+  type Font = String
 }

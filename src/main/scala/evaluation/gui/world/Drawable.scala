@@ -20,10 +20,10 @@ trait Drawable {
   def container_=( c: Container ) = _container = c
 
 
-  def box : Rect
+  val box = Prop( Rect(0,0,0,0) )
   def cursor( p: DPoint ) : Cursor = NormalCursor
   def moveCenter( to: DPoint )
-  def inside( p: DPoint ) = box.inside(p)
+  def inside( p: DPoint ) = box().inside(p)
   def draw( brush: Brush )
 
 }

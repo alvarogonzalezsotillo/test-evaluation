@@ -66,7 +66,14 @@ object Geom {
   }
 
   object Rect {
-    def apply(left: Coord, top: Coord, width: Coord, height: Coord) = new Rect(left, top, width, height)
+    def apply(left: Coord, top: Coord, width: Coord, height: Coord) : Rect = new Rect(left, top, width, height)
+    def apply( p1: Point, p2: Point ) : Rect= {
+      val left = p1.x min p2.x
+      val top = p1.y min p2.y
+      val right = p1.x max p2.x
+      val bottom = p1.y max p2.y
+      Rect( left, top, right-left, bottom - top)
+    }
   }
 
 }

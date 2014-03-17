@@ -50,7 +50,7 @@ trait View extends Logging with Container {
   }
 
   def eraseBackground(br: Brush) {
-    br.setColor("#cccccc")
+    br.color = "#cccccc"
     br.fillRect(box)
   }
 
@@ -94,7 +94,6 @@ object View {
 
   def moveWithPointerBehaviour(drawables: Drawable*): MouseListener = {
     case MouseEvent(p) =>
-      println(p)
       drawables.foreach(_.moveCenter(p))
       drawables.head.container.reDraw
   }
@@ -108,6 +107,7 @@ object View {
       case MouseDragged(p) => if( dragging ) drawable.moveCenter(p)
     }
   }
+
 
 
 }

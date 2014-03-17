@@ -36,6 +36,7 @@ object ViewWorldCoordinates {
 
     def apply(x: Coord, y: Coord) : DPoint = new ConcreteDPoint(x, y)
 
+
     def apply(p: VPoint) = {
       val t = p.view.transform
       val dp = t(p)

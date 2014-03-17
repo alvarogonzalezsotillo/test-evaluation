@@ -15,12 +15,17 @@ class World extends Drawable with Container{
 
   val _drawables = collection.mutable.Set[Drawable]()
 
-  def add( d: Drawable ) = _drawables.add(d)
+  def add( d: Drawable ) = {
+    _drawables.add(d)
+    d.box.addlistener{ b =>
+      box() = computeBox
+    }
+  }
   def remove( d: Drawable ) = _drawables.remove(d)
 
-  def box : Rect = if( _drawables.size > 1 ){
-    val r = _drawables.iterator.next.box
-    _drawables.foldLeft( r )( (r,d) => r + d.box )
+  def computeBox : Rect = if( _drawables.size > 1 ){
+    val r = _drawables.iterator.next.box()
+    _drawables.foldLeft( r )( (r,d) => r + d.box() )
   }
   else{
     Rect(0,0,0,0)
