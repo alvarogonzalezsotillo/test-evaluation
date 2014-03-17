@@ -17,11 +17,12 @@ class World extends Drawable with Container{
 
   def add( d: Drawable ) = {
     _drawables.add(d)
-    d.box.addlistener{ b =>
-      box() = computeBox
-    }
+    val l = d.box += ( () =>  box() = computeBox )
   }
-  def remove( d: Drawable ) = _drawables.remove(d)
+  def remove( d: Drawable ) = {
+    _drawables.remove(d)
+    // TODO: REMOVE BBOX LISTENER
+  }
 
   def computeBox : Rect = if( _drawables.size > 1 ){
     val r = _drawables.iterator.next.box()

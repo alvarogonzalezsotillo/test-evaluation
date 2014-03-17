@@ -31,16 +31,16 @@ class Prop[T]( initialValue: T ) extends (() => T) {
   var _listeners = Set[Listener]()
 
   class DetachableListener( l: Listener, prop: Prop[T] ){
-    def detach() = prop -= l
-    def attach() = prop += l
+    def detach() : Unit = prop -= l
+    def attach() : Unit = prop += l
   }
 
-  def +=( l: Listener ) = {
+  def +=( l: Listener ) : DetachableListener= {
     _listeners = _listeners + l
     new DetachableListener(l,this)
   }
 
-  def +=( l: () => Unit ) = this += ( (old: T, p: Prop[T]) => l() )
+  def +=( l: () => Unit ) : DetachableListener = this += ( (old: T, p: Prop[T]) => l() )
 
   def -=( l: Listener ) = _listeners = _listeners - l
 
