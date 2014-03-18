@@ -34,7 +34,7 @@ class AWTTransform( val transform : AffineTransform = new AffineTransform() ) ex
   }
 
   def apply(t: Point): Point = {
-    val newT = new Point2D.Float(t.x,t.y)
+    val newT = new Point2D.Double(t.x,t.y)
     transform.transform(newT,newT)
     new Point(newT.x, newT.y)
   }

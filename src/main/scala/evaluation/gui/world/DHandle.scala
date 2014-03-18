@@ -2,7 +2,6 @@ package evaluation.gui.world
 
 import evaluation.engine.Geom.{Point, Coord, Rect}
 import Cursor._
-import evaluation.gui.world.awt.AWTDHandle
 import evaluation.gui.world.ViewWorldCoordinates.DPoint
 
 /**
@@ -32,9 +31,18 @@ trait DHandle extends Drawable{
     case _ => Point(0,0)
   }
 
+  def draw(brush: Brush) = {
+    brush.color = color()
+    brush.drawRect(box())
+    brush.drawText(cursor.toString, box().center)
+  }
+
   def moveCenter(to: DPoint) =  box() = box().moveCenter(adjustPoint(to))
 }
 
 object DHandle{
-  def apply( size: Coord, cursor: Cursor) = new AWTDHandle(size,cursor)
+
+  class Handle( val size: Coord, val cursor: Cursor ) extends DHandle
+
+  def apply( size: Coord, cursor: Cursor) = new Handle(size,cursor)
 }

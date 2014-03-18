@@ -3,7 +3,7 @@ package evaluation.engine
 
 object Geom {
 
-  type Coord = Float
+  type Coord = Double
 
   class Point(val x: Coord, val y: Coord) {
 

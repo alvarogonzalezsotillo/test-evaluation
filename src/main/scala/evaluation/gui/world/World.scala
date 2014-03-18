@@ -17,7 +17,7 @@ class World extends Drawable with Container{
 
   def add( d: Drawable ) = {
     _drawables.add(d)
-    val l = d.box += ( () =>  box() = computeBox )
+    d.box += ( () =>  box() = computeBox )
   }
   def remove( d: Drawable ) = {
     _drawables.remove(d)

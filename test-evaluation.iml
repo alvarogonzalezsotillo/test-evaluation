@@ -18,6 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/scala" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/samples/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/samples/scala" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/samples/resources" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>

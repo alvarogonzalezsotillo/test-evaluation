@@ -52,6 +52,9 @@ object WorldSample extends App with Logging {
     case MouseClicked(_) => att.dettach
   }
 
+  PoligonOfHandles( view, world, DPoint(300,300), 100 )
+
+
   frame.add(view)
 
   frame.setVisible(true)
