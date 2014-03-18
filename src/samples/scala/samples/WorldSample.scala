@@ -28,7 +28,7 @@ object WorldSample extends App with Logging {
   val h = DHandle(10, ResizeEWCursor)
   world.add(h)
 
-  val i = DIcon("./src/testimages/corners/pink_flower_corner.png")
+  val i = DIcon("./src/testimages/interestPoint/img001.jpg")
   world.add(i)
 
   val line1 = DLine(h,i)

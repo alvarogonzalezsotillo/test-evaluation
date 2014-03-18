@@ -30,6 +30,11 @@ trait DLine extends Drawable {
     Rect( ini(), end() )
   }
 
+  box += {
+    val c = box().center
+    moveCenter( DPoint(c.x,c.y) )
+  }
+
   def moveCenter(to: DPoint): Unit = {
     val currentCenter = box().center
     val delta = to - currentCenter

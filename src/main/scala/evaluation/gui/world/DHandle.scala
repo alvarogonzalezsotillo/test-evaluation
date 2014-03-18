@@ -24,7 +24,7 @@ trait DHandle extends Drawable{
   override def cursor(p: DPoint): Cursor = cursor
 
   private def adjustPoint( p: DPoint ) = cursor match{
-    case ResizeCursor => p
+    case MoveCursor => p
     case NormalCursor => p
     case ResizeSNCursor => DPoint(box().center.x,p.y)
     case ResizeEWCursor => DPoint(p.x,box().center.y)

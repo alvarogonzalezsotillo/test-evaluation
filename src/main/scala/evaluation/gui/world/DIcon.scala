@@ -24,6 +24,11 @@ trait DIcon extends Drawable {
     imageBox + center()
   }
 
+  center.derive( box ){
+    val c = box().center
+    DPoint(c.x, c.y)
+  }
+
   def image : Image
 
   override def draw( b: Brush ) = b.drawImg( image, box() )

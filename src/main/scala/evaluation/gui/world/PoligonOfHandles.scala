@@ -16,7 +16,7 @@ object PoligonOfHandles{
 
   def apply( view: View, world: World, center: DPoint, radius: Coord, edges: Int = 5 ) = {
 
-    val cursor = Cursor.NormalCursor
+    val cursor = Cursor.MoveCursor
     val size = 4
     val handles = Array.fill(edges)( DHandle(size,cursor) )
     handles.foreach( h => world.add(h) )

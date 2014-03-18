@@ -10,5 +10,5 @@ package evaluation.gui.world
 
 object Cursor extends Enumeration{
   type Cursor = Value
-  val NormalCursor, ResizeEWCursor, ResizeSNCursor, ResizeCursor = Value
+  val NormalCursor, ResizeEWCursor, ResizeSNCursor, MoveCursor = Value
 }

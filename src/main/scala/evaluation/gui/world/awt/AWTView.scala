@@ -18,6 +18,7 @@ object AWTView {
   implicit def toAWTCursor(c: Cursor) = c match {
     case ResizeEWCursor => AWTCursor.getPredefinedCursor(AWTCursor.W_RESIZE_CURSOR)
     case ResizeSNCursor => AWTCursor.getPredefinedCursor(AWTCursor.S_RESIZE_CURSOR)
+    case MoveCursor => AWTCursor.getPredefinedCursor(AWTCursor.MOVE_CURSOR)
     case _ => AWTCursor.getDefaultCursor
   }
 

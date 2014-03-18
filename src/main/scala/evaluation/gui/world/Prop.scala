@@ -14,13 +14,15 @@ class Prop[T]( initialValue: T ) extends (() => T) {
   private var _value : T = initialValue
 
   def update( t: T ) = {
-    val old = _value
-    _value = t
-    notifySet(old)
+    if( _value != t ){
+      val old = _value
+      _value = t
+      notifySet(old)
+    }
   }
 
   def derive[A](props: Prop[A]*)( f : => T ) = {
-    props.foreach( p => p += { () => update(f) } )
+    props.foreach( p => p += {  update(f) } )
   }
 
   def apply = _value
@@ -40,7 +42,7 @@ class Prop[T]( initialValue: T ) extends (() => T) {
     new DetachableListener(l,this)
   }
 
-  def +=( l: () => Unit ) : DetachableListener = this += ( (old: T, p: Prop[T]) => l() )
+  def +=( l:  => Unit ) : DetachableListener = this += ( (old: T, p: Prop[T]) => l )
 
   def -=( l: Listener ) = _listeners = _listeners - l
 

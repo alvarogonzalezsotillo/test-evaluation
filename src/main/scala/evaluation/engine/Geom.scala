@@ -5,7 +5,7 @@ object Geom {
 
   type Coord = Double
 
-  class Point(val x: Coord, val y: Coord) {
+  class Point(val x: Coord, val y: Coord) extends Pair(x,y) {
 
     def +(p: Point) = Point(x + p.x, y + p.y)
 

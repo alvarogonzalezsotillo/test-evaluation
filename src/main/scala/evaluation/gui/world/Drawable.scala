@@ -21,6 +21,7 @@ trait Drawable {
 
 
   val box = Prop( Rect(0,0,0,0) )
+
   def cursor( p: DPoint ) : Cursor = NormalCursor
   def moveCenter( to: DPoint )
   def inside( p: DPoint ) = box().inside(p)
