@@ -22,6 +22,7 @@ object WorldSample extends App with Logging {
   logger.error( "error" )
 
   val frame = new JFrame("World Sample")
+  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 
   val world = new World
 
@@ -45,7 +46,7 @@ object WorldSample extends App with Logging {
   view.drawable = world
 
   val att = view += View.moveWithPointerBehaviour( h )
-
+  
   view += View.moveWithDragBehaviour(i)
 
   view += {

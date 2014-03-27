@@ -10,6 +10,8 @@ package evaluation.gui.world
 class Prop[T]( initialValue: T ) extends (() => T) {
 
   import Prop._
+  
+  val self = this
 
   private var _value : T = initialValue
 
@@ -29,16 +31,22 @@ class Prop[T]( initialValue: T ) extends (() => T) {
 
   private def notifySet( old: T ) = _listeners.foreach( l => l(old,this) )
 
-  var _listeners = Set[Listener[T]]()
+  type Listener = (T, Prop[T]) => Unit
 
-  def listen( l: Listener[T] ) : DetachableListener[T] = {
-    _listeners = _listeners + l
-    new DetachableListener(l,this)
+  class DetachableListener( l: Listener ){
+    def detach() = self unlisten l
   }
 
-  def listen( l:  => Unit ) : DetachableListener[T] = listen( (old: T, p: Prop[T]) => l )
+  var _listeners = Set[Listener]()
 
-  def unlisten( l: Listener[T] ) = _listeners = _listeners - l
+  def listen( l: Listener ) : DetachableListener = {
+    _listeners = _listeners + l
+    new DetachableListener(l)
+  }
+
+  def listen( l: => Unit ) : DetachableListener = listen( (old: T, p: Prop[T]) => l )
+
+  def unlisten( l: Listener ) = _listeners = _listeners - l
 
   override def toString = _value.toString
 }
@@ -53,14 +61,6 @@ object Prop{
     ret.derive(props:_*)(f)
     ret
   }
-
-  type Listener[T] = (T, Prop[T]) => Unit
-
-  class DetachableListener[T]( l: Listener[T], prop: Prop[T] ){
-    def detach() : Unit = prop unlisten l
-    def attach() : Unit = prop listen l
-  }
-
 
 
   def main( args: Array[String]) = {

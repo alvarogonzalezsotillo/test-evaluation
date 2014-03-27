@@ -3,6 +3,7 @@ package evaluation.gui.world
 import evaluation.engine.Geom._
 import evaluation.gui.world.Cursor._
 import evaluation.gui.world.ViewWorldCoordinates.DPoint
+import com.typesafe.scalalogging.slf4j.Logging
 
 
 /**
@@ -12,7 +13,7 @@ import evaluation.gui.world.ViewWorldCoordinates.DPoint
  * Time: 12:46
  * To change this template use File | Settings | File Templates.
  */
-trait Drawable {
+abstract class Drawable extends Logging{
 
   var _container : Container = null
 
@@ -21,16 +22,19 @@ trait Drawable {
 
 
   val box = Prop( Rect(0,0,0,0) )
+  redrawableProperty(box)
   
-  box.listen{
-    if( container != null ){
-      container.reDraw
+  def cursorAt( p: DPoint ) = NormalCursor
+  
+  def redrawableProperty( props: Prop[_]* ) = props.foreach{ 
+    _.listen{
+      if( container != null ){
+        container.reDraw
+      }
     }
   }
 
-  def cursor( p: DPoint ) : Cursor = NormalCursor
   def moveCenter( to: DPoint )
   def inside( p: DPoint ) = box().inside(p)
   def draw( brush: Brush )
-
 }

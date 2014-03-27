@@ -98,7 +98,7 @@ trait View extends Logging with Container {
 
   this += {
     case MouseMoved(p) =>
-      cursor = drawable.cursor(p)
+      cursor = drawable.cursorAt(p)
     case _ =>
   }
 

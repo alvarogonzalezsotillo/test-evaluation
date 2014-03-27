@@ -19,7 +19,7 @@ trait DLine extends Drawable {
   val ini = Prop( DPoint(0,0) )
   val end = Prop( DPoint(0,0) )
   val color = Prop[Color]( "#000000" )
-
+  redrawableProperty(color)
 
   override def draw(b: Brush) = {
     b.color = color()
@@ -29,12 +29,12 @@ trait DLine extends Drawable {
   box.derive( ini, end ){
     Rect( ini(), end() )
   }
-
+  
   box.listen{
     val c = box().center
     moveCenter( DPoint(c.x,c.y) )
   }
-
+  
   def moveCenter(to: DPoint): Unit = {
     val currentCenter = box().center
     val delta = to - currentCenter

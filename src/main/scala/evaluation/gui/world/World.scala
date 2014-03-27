@@ -36,9 +36,9 @@ class World extends Drawable with Container{
 
   def drawablesAt( p: DPoint ) = _drawables.filter( _.inside(p) )
 
-  override def cursor(p: DPoint): Cursor = drawablesAt(p) match{
-    case d if d.size > 0 => d.iterator.next.cursor(p)
-    case _ => super.cursor(p)
+  override def cursorAt(p: DPoint) = drawablesAt(p) match{
+    case d if d.size > 0 => d.iterator.next.cursorAt(p)
+    case _ => super.cursorAt(p)
   }
 
   def moveCenter(delta: DPoint) = _drawables.foreach( _.moveCenter(delta) )
