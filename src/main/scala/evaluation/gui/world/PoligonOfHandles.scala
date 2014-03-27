@@ -14,15 +14,16 @@ object PoligonOfHandles{
 
 
 
-  def apply( view: View, world: World, center: DPoint, radius: Coord, edges: Int = 5 ) = {
+  def apply( view: View, world: World, center: DPoint, radius: Coord, edges: Int = 4 ) = {
 
     val cursor = Cursor.MoveCursor
     val size = 4
     val handles = Array.fill(edges)( DHandle(size,cursor) )
     handles.foreach( h => world.add(h) )
     handles.foreach( view += View.moveWithDragBehaviour(_) )
+    val angleStep = 2*Math.PI/edges
     for( i <- 0 until edges ){
-      val angle = 2*Math.PI*i/edges
+      val angle = angleStep*i + angleStep/2
       val x = radius*Math.cos(angle) + center.x
       val y = radius*Math.sin(angle) + center.y
       handles(i).moveCenter( DPoint(x,y) )

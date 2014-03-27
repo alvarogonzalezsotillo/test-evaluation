@@ -21,6 +21,12 @@ trait Drawable {
 
 
   val box = Prop( Rect(0,0,0,0) )
+  
+  box.listen{
+    if( container != null ){
+      container.reDraw
+    }
+  }
 
   def cursor( p: DPoint ) : Cursor = NormalCursor
   def moveCenter( to: DPoint )

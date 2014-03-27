@@ -74,14 +74,20 @@ class AWTView extends View{
     Rect(0, 0, size.width, size.height)
   }
 
-  val repaintFastForFewObjects = true
+  val repaintFastForFewObjects = false
 
   override def reDraw(b: Brush){
     super.reDraw(b)
-    if( repaintFastForFewObjects )
-      _canvas.paint(_canvas.getGraphics)
-    else
+    if( repaintFastForFewObjects ){
+      val g = _canvas.getGraphics
+      if( g != null ){
+        _canvas.paint(g)
+        g.dispose
+      }
+    }
+    else{
       _canvas.repaint
+    }
   }
 
   val _mouseListener = new MouseAdapter() {

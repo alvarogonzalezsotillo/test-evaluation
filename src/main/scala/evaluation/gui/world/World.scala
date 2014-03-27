@@ -17,10 +17,12 @@ class World extends Drawable with Container{
 
   def add( d: Drawable ) = {
     _drawables.add(d)
-    d.box += { box() = computeBox }
+    d.container = this
+    d.box listen { box() = computeBox }
   }
   def remove( d: Drawable ) = {
     _drawables.remove(d)
+    d.container = null
     // TODO: REMOVE BBOX LISTENER
   }
 
@@ -44,9 +46,4 @@ class World extends Drawable with Container{
   def draw(brush: Brush) = _drawables.foreach( _.draw(brush) )
 
   def reDraw = container.reDraw
-
-  override def container_=(c : Container ) = {
-    super.container_=(c)
-    _drawables.foreach( _.container = c )
-  }
 }

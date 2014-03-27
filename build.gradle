@@ -58,6 +58,13 @@ task runSample(type: JavaExec, dependsOn:[classes]) {
     classpath += sourceSets.samples.runtimeClasspath
 }
 
+task runWorld(type: JavaExec, dependsOn:[classes]) {
+    main = 'samples.WorldSample'
+    //main = 'samples.MultipleImagesPaneSample'
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.samples.runtimeClasspath
+}
+
 task runWebcam(type: JavaExec, dependsOn:[classes]) {
     main = 'samples.CaptureImageAndPanelSample'
     classpath = sourceSets.main.runtimeClasspath

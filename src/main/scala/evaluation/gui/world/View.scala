@@ -45,8 +45,16 @@ trait View extends Logging with Container {
 
   def cursor_=(c: Cursor) = _cursor = c
 
+  private var _needsRedraw = false
+
   def reDraw {
-    reDraw(brush)
+    if( _handlingEvent ){
+      _needsRedraw = true
+    }
+    else{
+      reDraw(brush)
+      _needsRedraw = false
+    }
   }
 
   def eraseBackground(br: Brush) {
@@ -69,9 +77,23 @@ trait View extends Logging with Container {
   }
 
   def -=(l: MouseListener) = _mouseListeners = _mouseListeners - l
+  
+  private var _handlingEvent = false
 
-  def invokeMouseEvent(me: MouseEvent) = _mouseListeners.foreach{ l =>
-    if( l.isDefinedAt(me) ) l(me)
+  def invokeMouseEvent(me: MouseEvent) = {
+    _handlingEvent = true
+    try{
+      _mouseListeners.foreach{ l =>
+        if( l.isDefinedAt(me) ) l(me)
+      }
+    }
+    finally{
+      _handlingEvent = false
+    }
+    
+    if( _needsRedraw ){
+      reDraw
+    }
   }
 
   this += {
@@ -95,7 +117,6 @@ object View {
   def moveWithPointerBehaviour(drawables: Drawable*): MouseListener = {
     case MouseEvent(p) =>
       drawables.foreach(_.moveCenter(p))
-      drawables.head.container.reDraw
   }
 
   def moveWithDragBehaviour( drawable : Drawable ) : MouseListener = {

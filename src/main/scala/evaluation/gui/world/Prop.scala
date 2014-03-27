@@ -22,29 +22,23 @@ class Prop[T]( initialValue: T ) extends (() => T) {
   }
 
   def derive[A](props: Prop[A]*)( f : => T ) = {
-    props.foreach( p => p += {  update(f) } )
+    props.foreach( p => p.listen{  update(f) } )
   }
 
   def apply = _value
 
   private def notifySet( old: T ) = _listeners.foreach( l => l(old,this) )
 
-  type Listener = (T, Prop[T]) => Unit
-  var _listeners = Set[Listener]()
+  var _listeners = Set[Listener[T]]()
 
-  class DetachableListener( l: Listener, prop: Prop[T] ){
-    def detach() : Unit = prop -= l
-    def attach() : Unit = prop += l
-  }
-
-  def +=( l: Listener ) : DetachableListener= {
+  def listen( l: Listener[T] ) : DetachableListener[T] = {
     _listeners = _listeners + l
     new DetachableListener(l,this)
   }
 
-  def +=( l:  => Unit ) : DetachableListener = this += ( (old: T, p: Prop[T]) => l )
+  def listen( l:  => Unit ) : DetachableListener[T] = listen( (old: T, p: Prop[T]) => l )
 
-  def -=( l: Listener ) = _listeners = _listeners - l
+  def unlisten( l: Listener[T] ) = _listeners = _listeners - l
 
   override def toString = _value.toString
 }
@@ -60,6 +54,12 @@ object Prop{
     ret
   }
 
+  type Listener[T] = (T, Prop[T]) => Unit
+
+  class DetachableListener[T]( l: Listener[T], prop: Prop[T] ){
+    def detach() : Unit = prop unlisten l
+    def attach() : Unit = prop listen l
+  }
 
 
 

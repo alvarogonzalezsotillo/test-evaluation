@@ -30,7 +30,7 @@ trait DLine extends Drawable {
     Rect( ini(), end() )
   }
 
-  box += {
+  box.listen{
     val c = box().center
     moveCenter( DPoint(c.x,c.y) )
   }
